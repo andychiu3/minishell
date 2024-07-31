@@ -10,4 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
+/*
+sgl quote
+dbl quote
+skip space
+
+*/
+int	check_av()
+{
+
+}
+
+int	init_()
+{
+
+}
+
+int	main(int ac, char **av, char **env)
+{
+	check_av();
+	init_();
+
+}
