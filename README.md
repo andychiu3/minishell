@@ -7,7 +7,8 @@ readline, add_history
 rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
 
 fork, dup, dup2, pip, 
-kill, wait, waitpid, wait3, wait4, signal, sigaction, sigemptyset, sigaddset,
+kill, wait, waitpid, wait3, wait4, 
+signal, sigaction, sigemptyset, sigaddset,
 
 getcwd, chdir, opendir, readdir, closedir,
 

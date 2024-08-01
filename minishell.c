@@ -36,26 +36,38 @@ char	*get_env_value(t_sh *sh, char *target)
 	return (NULL);
 }
 
+void	sig_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		// printf("Caught SIGINT\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		ft_putstr_fd("\b\b  ", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd(PROMPT, STDOUT_FILENO);
+		// printf("Caught SIGINT\n");
+	}
+}
+
 void	minishell(t_sh *sh)
 {
 	char	*line;
 
 	(void) sh;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline(PROMPT);
 		if (!line)
 		{
-			// rl_replace_line("", 0);
-        	// rl_on_new_line();
-       		// rl_redisplay();
 			write(1, "exit", 4);
 			break ;
 		}
-		// signal(SIGINT, sig_handler);
-		// signal(SIGQUIT, sig_handler);
-		// if (*line)
-		// 	add_history(line);
+		if (*line)
+			add_history(line);
 		// check_line(line);
 		// tokenize(line);
 		// parse();
