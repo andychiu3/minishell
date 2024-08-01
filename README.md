@@ -17,7 +17,15 @@ tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 access, stat, lstat, fstat, unlink, 
 
 
-  
+
+- env
+export, VAR, unset, cd
+- ctrl C in bash
+signal
+- ctrl D
+exit
+- ctrl \
+does nothing
 - tokenize
 - AST
 - sgl or dbl quote
@@ -34,8 +42,6 @@ add_history
 - | PIPE
 - $ VAR
 - $?
-- ctrl C, ctrl D and ctrl \ in bash behave
-signal
 - echo -n
 - cd
 - pwd

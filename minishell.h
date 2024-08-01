@@ -21,6 +21,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <stdbool.h>
+
+# define PROMPT "minishell $ "
 
 enum e_token
 {
@@ -58,8 +61,9 @@ typedef struct s_sh
 	t_list	*token;
 	char	**env;
 	int		ret;
+	// bool	exit;
 }	t_sh;
 
-
+int	init_(t_sh *sh, char **env);
 
 #endif
