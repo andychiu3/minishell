@@ -12,12 +12,12 @@
 
 NAME		= minishell
 
-SRC			= minishell.c
+SRC			= minishell.c signal.c
 OBJ			= $(SRC:.c=.o)
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Ilibft
-# RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory
+# RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 RL			= -L/usr/local/opt/readline/lib -lreadline
 
 LIBFT		= libft/libft.a

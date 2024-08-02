@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-/*
-sgl quote
-dbl quote
-skip space
-
-*/
-// int	check_av()
-// {
-
-// }
-
 char	*get_env_value(t_sh *sh, char *target)
 {
 	int		i;
@@ -36,47 +25,33 @@ char	*get_env_value(t_sh *sh, char *target)
 	return (NULL);
 }
 
-void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		// printf("Caught SIGINT\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		ft_putstr_fd("\b\b  ", STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		ft_putstr_fd(PROMPT, STDOUT_FILENO);
-		// printf("Caught SIGINT\n");
-	}
-}
-
 void	minishell(t_sh *sh)
 {
 	char	*line;
 
 	(void) sh;
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		sig_init();
 		line = readline(PROMPT);
 		if (!line)
 		{
-			write(1, "exit", 4);
-			break ;
+			rl_redisplay();
+			ft_putstr_fd(" exit", STDOUT_FILENO);
+			exit(0);
 		}
+		signal(SIGQUIT, sig_quit);
 		if (*line)
 			add_history(line);
 		// check_line(line);
 		// tokenize(line);
 		// parse();
-		//  free(line);
+		// free(line);
 	}
 }
 
 // STRDUP needed if we r gonna change/use env
-int	init_(t_sh *sh, char **env)
+int	init_env(t_sh *sh, char **env)
 {
 	int	i;
 
@@ -95,15 +70,10 @@ int	init_(t_sh *sh, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_sh	sh;
-	// int		i;
 
 	(void) ac;
 	(void) av;
 	ft_memset(&sh, 0, sizeof(t_sh));
-	//check_av();
-	init_(&sh, env);
+	init_env(&sh, env);
 	minishell(&sh);
-	// i = -1;
-	// while (sh.env[++i])
-	// 	printf("%s\n", sh.env[i]);
 }

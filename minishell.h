@@ -22,6 +22,10 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <curses.h>
+# include <term.h>
+# include <termios.h>
+
 
 # define PROMPT "minishell $ "
 
@@ -61,9 +65,15 @@ typedef struct s_sh
 	t_list	*token;
 	char	**env;
 	int		ret;
-	// bool	exit;
+	// bool	cmd;
 }	t_sh;
 
-int	init_(t_sh *sh, char **env);
+int		init_env(t_sh *sh, char **env);
+
+// signal
+void	sig_int(int sig);
+void	sig_quit(int sig);
+void	sig_init(void);
+void	disable_ctrl_echo(void);
 
 #endif
