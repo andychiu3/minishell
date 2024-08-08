@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/08 19:58:45 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/08 21:45:33 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	lexer_(char *line)
 		perror("unclosed quote");
 }
 
-void	lexer(char *line, t_list *token_list)
+void	lexer(char *line, t_list **token_list)
 {
 	int		quote;
 	int		i;
@@ -135,7 +135,7 @@ void	lexer(char *line, t_list *token_list)
 			if (array)
 			{
 				token = tokenize(array);
-				ft_lstadd_back(&token_list, ft_lstnew((void *)token));
+				ft_lstadd_back(token_list, ft_lstnew((void *)token));
 			}
 		}
 	}
@@ -153,5 +153,11 @@ void	scanning(char *line)
 		return ;
 	}
 	token = NULL;
-	lexer(line, token);
+	lexer(line, &token);
+	// while (token)
+	// {
+	// 	t_token *t = (t_token *)token->content;
+	// 	printf("%s, type: %d\n", (char *)t->content, t->type);
+	// 	token = token->next;
+	// }
 }
