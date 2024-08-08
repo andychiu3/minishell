@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/07/30 10:44:09 by achiu            ###   ########.fr       */
+/*   Updated: 2024/08/08 19:45:53 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@
 # include <term.h>
 # include <termios.h>
 
-
 # define PROMPT "minishell $ "
 
 enum e_token
 {
-	WORD,
+	ARG,
 	CMD,
 	PIPE,
 	VAR,
@@ -39,6 +38,13 @@ enum e_token
 	TRUNC,
 	HEREDOC,
 	APPEND,
+};
+
+enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE,
 };
 
 typedef struct s_token
@@ -71,9 +77,31 @@ typedef struct s_sh
 int		init_env(t_sh *sh, char **env);
 
 // signal
+void	sig_init(void);
 void	sig_int(int sig);
 void	sig_quit(int sig);
-void	sig_init(void);
 void	disable_ctrl_echo(void);
+
+// check
+// void	lexical(char *line);
+// int		quote_case(char *line);
+// void	tokenize(char *line, t_list **token);
+// char	*extract_quote(char **line, char c);
+// char	*remove_quote(char *str);
+// char	*extract_(char **line, char c);
+
+// token
+int		is_cmd(char *str);
+t_token	*tokenize(char *array);
+
+// lexer
+// void	lexer(char *line);
+void	scanning(char *line);
+void	lexer(char *line, t_list *token);
+int		if_quote(char c, int quote);
+char	*extract(char *str, int *start, int *i);
+char	*remove_quote(char *str);
+
+// void	parser();
 
 #endif

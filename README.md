@@ -59,6 +59,7 @@ bonus
 
 no
 - non interactive
+- interpret unclosed quote
 - shlvl?
 - ;
 - \

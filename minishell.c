@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/07/30 10:53:05 by achiu            ###   ########.fr       */
+/*   Updated: 2024/08/08 19:45:28 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void	minishell(t_sh *sh)
 		line = readline(PROMPT);
 		if (!line)
 		{
-			rl_redisplay();
-			ft_putstr_fd(" exit", STDOUT_FILENO);
+			printf("\033[1A\033[0K");
+			printf(PROMPT);
+			printf("exit\n");
 			exit(0);
 		}
 		signal(SIGQUIT, sig_quit);
 		if (*line)
 			add_history(line);
-		// check_line(line);
-		// tokenize(line);
+		scanning(line);
 		// parse();
 		// free(line);
 	}
