@@ -42,7 +42,7 @@ void	disable_ctrl_echo(void)
 
 void	sig_init(void)
 {
-	// disable_ctrl_echo();
+	disable_ctrl_echo();
 	signal(SIGINT, sig_int);
 	signal(SIGQUIT, SIG_IGN);
 }
