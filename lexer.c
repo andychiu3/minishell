@@ -128,10 +128,10 @@ void	scanning(char *line)
 	}
 	token = NULL;
 	lexer(line, &token);
-	// while (token)
-	// {
-	// 	t_token *t = (t_token *)token->content;
-	// 	printf("%s, type: %d\n", (char *)t->content, t->type);
-	// 	token = token->next;
-	// }
+	while (token)
+	{
+		t_token *t = (t_token *)token->content;
+		printf("%s, type: %d\n", (char *)t->content, t->type);
+		token = token->next;
+	}
 }
