@@ -6,7 +6,7 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/08/08 19:44:06 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/08/21 14:53:55 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,11 @@ $(LIBFT):
 
 clean:
 			rm -rf $(OBJ)
-			# $(LIBFT_MAKE) clean
+			$(LIBFT_MAKE) clean
 
 fclean: 	clean
 			rm -rf $(NAME)
-			# rm -rf $(LIBFT)
+			rm -rf $(LIBFT)
 
 re:			fclean all
 
