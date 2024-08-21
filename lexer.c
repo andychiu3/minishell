@@ -6,13 +6,14 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/08 21:45:33 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/09 10:14:34 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // if quote valid
+// CONSIDER IF WE KEEP IT AFTER AST
 int	quote_case(char *line)
 {
 	int	i;
@@ -34,6 +35,7 @@ int	quote_case(char *line)
 	return (quote == NONE);
 }
 
+// update char c quote situation
 int	if_quote(char c, int quote)
 {
 	if (c == '\'' && quote == NONE)
@@ -47,6 +49,7 @@ int	if_quote(char c, int quote)
 	return (quote);
 }
 
+// remove the quote after substr
 char	*remove_quote(char *str)
 {
 	char	*new;
@@ -66,6 +69,9 @@ char	*remove_quote(char *str)
 	return (new);
 }
 
+// ignoring ' ' when no quote -> update START
+// no need to update the int *i tho
+// get the token->content if valid
 char	*extract(char *str, int *start, int *i)
 {
 	char	*new;
@@ -82,39 +88,7 @@ char	*extract(char *str, int *start, int *i)
 	return (new);
 }
 
-void	lexer_(char *line)
-{
-	t_list	*token;
-	int		quote;
-	int		i;
-	int		start;
-	char	*array;
-
-	if (!line)
-		return ;
-	i = -1;
-	start = 0;
-	token = NULL;
-	quote = NONE;
-	while (++i < (int)ft_strlen(line) + 1)
-	{
-		quote = if_quote(line[i], quote);
-		if (quote == NONE && (line[i] == ' ' || line[i] == '\0'))
-		{
-			array = extract(line, &start, &i);
-			if (array)
-				ft_lstadd_back(&token, ft_lstnew((void *)array));
-		}
-	}
-	while (token)
-	{
-		printf("%s\n", (char *)token->content);
-		token = token->next;
-	}
-	if (quote != NONE)
-		perror("unclosed quote");
-}
-
+// check the READLINE including last \0
 void	lexer(char *line, t_list **token_list)
 {
 	int		quote;

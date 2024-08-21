@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/08 21:26:40 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/21 12:10:59 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char	*cmd;
-	char	*arg;
+	char	**arg;
+	char	*option;
 }	t_cmd;
 
 typedef struct s_ast
