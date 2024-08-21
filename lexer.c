@@ -88,7 +88,7 @@ char	*extract(char *str, int *start, int *i)
 	return (new);
 }
 
-// check the READLINE including last \0
+// check the READLINE including last \0 so (int)ft_strlen(line) + 1
 void	lexer(char *line, t_list **token_list)
 {
 	int		quote;
@@ -128,10 +128,11 @@ void	scanning(char *line)
 	}
 	token = NULL;
 	lexer(line, &token);
-	while (token)
-	{
-		t_token *t = (t_token *)token->content;
-		printf("%s, type: %d\n", (char *)t->content, t->type);
-		token = token->next;
-	}
+	parser(&token);
+	// while (token)
+	// {
+	// 	t_token *t = (t_token *)token->content;
+	// 	printf("%s, type: %d\n", (char *)t->content, t->type);
+	// 	token = token->next;
+	// }
 }

@@ -32,8 +32,8 @@ enum e_token
 {
 	ARG,
 	CMD,
-	PIPE,
 	VAR,
+	PIPE,
 	INPUT,
 	TRUNC,
 	HEREDOC,
@@ -57,7 +57,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**arg;
-	char	*option;
+	// char	*option;
 }	t_cmd;
 
 typedef struct s_ast
@@ -103,6 +103,10 @@ int		if_quote(char c, int quote);
 char	*extract(char *str, int *start, int *i);
 char	*remove_quote(char *str);
 
-// void	parser();
+// parse
+t_ast	parser(t_list **tokens);
+t_ast	*create_cmd_node(t_list **tokens);
+int		arg_count(t_list *token);
+t_ast	*create_op_node(t_list **tokens);
 
 #endif

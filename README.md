@@ -24,7 +24,7 @@ export, VAR, unset, cd
 - ctrl C in bash
 signal
 - ctrl D
-exit
+exit -> ^D or \n
 - ctrl \
 does nothing
 - tokenize
@@ -59,7 +59,6 @@ bonus
 
 no
 - non interactive
-- interpret unclosed quote
 - shlvl?
 - ;
 - \
