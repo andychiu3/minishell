@@ -6,20 +6,21 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/08/21 14:53:55 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/08/22 17:57:49 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
-SRC			= minishell.c signal.c token.c lexer.c
+SRC			= minishell.c signal.c token.c lexer.c parse.c visualize.c
 OBJ			= $(SRC:.c=.o)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibft -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -Ilibft
 # RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 # RL			= -L/usr/local/opt/readline/lib -lreadline
 # RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
+# -fsanitize=address
 
 LIBFT		= libft/libft.a
 LIBFT_MAKE	= make -C libft/
@@ -36,11 +37,11 @@ $(LIBFT):
 
 clean:
 			rm -rf $(OBJ)
-			$(LIBFT_MAKE) clean
+			# $(LIBFT_MAKE) clean
 
 fclean: 	clean
 			rm -rf $(NAME)
-			rm -rf $(LIBFT)
+			# rm -rf $(LIBFT)
 
 re:			fclean all
 

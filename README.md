@@ -6,7 +6,7 @@ open, read, close
 readline, add_history
 rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
 
-fork, dup, dup2, pip, 
+fork, dup, dup2, pipe, 
 kill, wait, waitpid, wait3, wait4, 
 signal, sigaction, sigemptyset, sigaddset,
 
@@ -18,7 +18,7 @@ tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 access, stat, lstat, fstat, unlink, 
 
 
-
+echo cd pwd export unset env exit
 - env
 export, VAR, unset, cd
 - ctrl C in bash

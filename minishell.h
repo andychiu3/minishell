@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/21 12:10:59 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/23 16:19:26 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,22 @@ typedef struct s_token
 	void	*content;
 }	t_token;
 
+// typedef struct s_redirect
+// {
+// 	int		type;
+// 	char	*file;
+// }
+
 typedef struct s_cmd
 {
-	char	*cmd;
-	char	**arg;
-	// char	*option;
+	char		*cmd;
+	char		**arg;
+	// t_redirect	*redirect;
 }	t_cmd;
 
 typedef struct s_ast
 {
+	int				type;
 	void			*content;
 	struct s_ast	*left;
 	struct s_ast	*right;
@@ -102,11 +109,19 @@ void	lexer(char *line, t_list **token);
 int		if_quote(char c, int quote);
 char	*extract(char *str, int *start, int *i);
 char	*remove_quote(char *str);
+int		quote_case(char *line);
 
 // parse
-t_ast	parser(t_list **tokens);
+t_ast	*parser(t_list **tokens);
 t_ast	*create_cmd_node(t_list **tokens);
+void	cmd_node_has_arg(t_ast *cmd_node, t_list **token);
 int		arg_count(t_list *token);
+t_ast	*handle_op(t_ast *node, t_list **token);
 t_ast	*create_op_node(t_list **tokens);
+
+// visualize
+void	prnt_token(t_list *token);
+void	prnt_ast(t_ast *node);
+void	node_prnter(t_ast *node);
 
 #endif
