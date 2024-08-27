@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:22:29 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/23 11:08:32 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/26 16:35:08 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ void	prnt_token(t_list *token)
 
 void	node_prnter(t_ast *node)
 {
-	t_cmd	*cmd;
-	int		i;
+	t_cmd		*cmd;
+	int			i;
 
 	if (!node)
 		return ;
-	if (node->type >= PIPE && node->type <= APPEND)
-	{
+	if (node->type == PIPE)
 		ft_printf("%s", (char *)node->content);
-	}
 	else if (node->type == CMD)
 	{
 		cmd = node->content;
@@ -43,26 +41,60 @@ void	node_prnter(t_ast *node)
 		while (cmd->arg && cmd->arg[++i])
 			ft_printf(", %s", cmd->arg[i]);
 	}
+	else if (is_redirect(node->type))
+	{
+		ft_printf("%s", ((t_redirect *)(node->content))->redir);
+		if (((t_redirect *)(node->content))->file)
+			ft_printf(", %s", ((t_redirect *)(node->content))->file);
+	}
 	else
-		printf("what is this\n");
+		printf("??%d\n", ((t_token *)(node->content))->type);
 }
 
-// right node with -> 
-// left node with \n
-// arg of cmd with ,
-void	prnt_ast(t_ast *node)
+void	prnt_ast(t_ast *node, int level)
 {
+	int	i;
+
 	if (!node)
 		return ;
-	while (node)
-	{
-		node_prnter(node);
-		if (node->right)
-		{
-			write(1, "      ->      ", 14);
-			node_prnter(node->right);
-		}
-		node = node->left;
-		printf("\n");
-	}
+	i = -1;
+	while (++i < level)
+		ft_printf("  ");
+	node_prnter(node);
+	ft_printf("\n");
+	prnt_ast(node->left, level + 1);
+	prnt_ast(node->right, level + 1);
 }
+
+// void	prnt_ast(t_ast *node)
+// {
+// 	int	i;
+// 	int	space;
+
+// 	if (!node)
+// 		return ;
+// 	prnt_ast(node->left);
+// 	space = 0;
+// 	while (node)
+// 	{
+// 		if (node->left)
+// 		{
+// 			space = node_prnter(node->left);
+// 			space += ft_printf(" <- ");
+// 		}
+// 		space += node_prnter(node);
+// 		node = node->right;
+// 		printf("\n");
+// 		if (node && !(is_redirect(node->type)))
+// 		{
+// 			printf("\n");
+// 			i = -1;
+// 			while (++i < space)
+// 				ft_printf(" ");
+// 			printf("\\\n");
+// 			i = -1;
+// 			while (++i < space + 1)
+// 				ft_printf(" ");
+// 		}
+// 	}
+// }

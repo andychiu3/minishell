@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/23 16:38:57 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/27 09:08:03 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,22 +115,23 @@ void	lexer(char *line, t_list **token_list)
 	}
 }
 
-void	scanning(char *line)
-{
-	t_list	*token;
-	t_ast	*root;
+// void	scanning(char *line)
+// {
+// 	t_list	*token;
+// 	t_ast	*root;
 
-	if (!line)
-		return ;
-	if (!quote_case(line))
-	{
-		printf("unclosed quotes\n");
-		return ;
-	}
-	token = NULL;
-	lexer(line, &token);
-	// prnt_token(token);
-	root = NULL;
-	root = parser(&token);
-	prnt_ast(root);
-}
+// 	if (!line)
+// 		return ;
+// 	if (!quote_case(line))
+// 	{
+// 		printf("unclosed quotes\n");
+// 		return ;
+// 	}
+// 	token = NULL;
+// 	lexer(line, &token);
+// 	// prnt_token(token);
+// 	root = NULL;
+// 	root = parser(&token);
+// 	// prnt_ast(root, 0);
+// 	ft_out(token, root);
+// }

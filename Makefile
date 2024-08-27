@@ -6,13 +6,19 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/08/22 17:57:49 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/08/27 09:05:31 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
-SRC			= minishell.c signal.c token.c lexer.c parse.c visualize.c
+SRC			= \
+			minishell.c free_address.c \
+			signal.c \
+			env.c \
+			token.c lexer.c parse.c visualize.c \
+			node_pipe.c node_cmd.c node_redir.c \
+
 OBJ			= $(SRC:.c=.o)
 
 CC			= cc

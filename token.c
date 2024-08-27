@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:06:07 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/08 19:57:23 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/23 17:12:04 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@ int	is_cmd(char *str)
 		|| ft_strncmp(str, "unset", sizeof(str)) == 0
 		|| ft_strncmp(str, "env", sizeof(str)) == 0
 		|| ft_strncmp(str, "exit", sizeof(str)) == 0);
+}
+
+int	is_trunc(char *str)
+{
+	return (ft_strncmp(str, "2>", sizeof(str)) == 0
+		|| ft_strncmp(str, ">", sizeof(str)) == 0
+		|| ft_strncmp(str, "2>&1", sizeof(str)) == 0
+		|| ft_strncmp(str, "1>&2", sizeof(str)) == 0);
+}
+
+int	is_append(char *str)
+{
+	return (ft_strncmp(str, "2>>", sizeof(str)) == 0
+		|| ft_strncmp(str, ">>", sizeof(str)) == 0
+		|| ft_strncmp(str, "2>>&1", sizeof(str)) == 0
+		|| ft_strncmp(str, "1>>&2", sizeof(str)) == 0);
 }
 
 t_token	*tokenize(char *array)
@@ -38,11 +54,11 @@ t_token	*tokenize(char *array)
 		token->type = VAR;
 	else if (ft_strncmp("<", array, sizeof(array)) == 0)
 		token->type = INPUT;
-	else if (ft_strncmp(">", array, sizeof(array)) == 0)
+	else if (is_trunc(array))
 		token->type = TRUNC;
 	else if (ft_strncmp(">>", array, sizeof(array)) == 0)
 		token->type = HEREDOC;
-	else if (ft_strncmp("<<", array, sizeof(array)) == 0)
+	else if (is_append(array))
 		token->type = APPEND;
 	else
 		token->type = ARG;

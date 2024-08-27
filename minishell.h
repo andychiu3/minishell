@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/23 16:19:26 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/27 09:06:59 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,16 @@ typedef struct s_token
 	void	*content;
 }	t_token;
 
-// typedef struct s_redirect
-// {
-// 	int		type;
-// 	char	*file;
-// }
+typedef struct s_redirect
+{
+	char	*redir;
+	char	*file;
+}	t_redirect;
 
 typedef struct s_cmd
 {
 	char		*cmd;
 	char		**arg;
-	// t_redirect	*redirect;
 }	t_cmd;
 
 typedef struct s_ast
@@ -79,16 +78,24 @@ typedef struct s_sh
 	t_list	*token;
 	char	**env;
 	int		ret;
-	// bool	cmd;
 }	t_sh;
 
-int		init_env(t_sh *sh, char **env);
+// env
+int			init_env(t_sh *sh, char **env);
+char		*get_env_value(t_sh *sh, char *target);
+
+// free malloc
+void		ft_out(t_list *token, t_ast *node);
+void		free_token(void *content);
+void		free_ast(t_ast *node);
+void		free_cmd(t_cmd *cmd);
+void		free_redir(t_redirect *redir);
 
 // signal
-void	sig_init(void);
-void	sig_int(int sig);
-void	sig_quit(int sig);
-void	disable_ctrl_echo(void);
+void		sig_init(void);
+void		sig_int(int sig);
+void		sig_quit(int sig);
+void		disable_ctrl_echo(void);
 
 // check
 // void	lexical(char *line);
@@ -99,29 +106,42 @@ void	disable_ctrl_echo(void);
 // char	*extract_(char **line, char c);
 
 // token
-int		is_cmd(char *str);
-t_token	*tokenize(char *array);
+t_token		*tokenize(char *array);
+int			is_cmd(char *str);
+int			is_trunc(char *str);
+int			is_append(char *str);
 
 // lexer
 // void	lexer(char *line);
-void	scanning(char *line);
-void	lexer(char *line, t_list **token);
-int		if_quote(char c, int quote);
-char	*extract(char *str, int *start, int *i);
-char	*remove_quote(char *str);
-int		quote_case(char *line);
+void		scanning(char *line);
+void		lexer(char *line, t_list **token);
+int			if_quote(char c, int quote);
+char		*extract(char *str, int *start, int *i);
+char		*remove_quote(char *str);
+int			quote_case(char *line);
 
 // parse
-t_ast	*parser(t_list **tokens);
-t_ast	*create_cmd_node(t_list **tokens);
-void	cmd_node_has_arg(t_ast *cmd_node, t_list **token);
-int		arg_count(t_list *token);
-t_ast	*handle_op(t_ast *node, t_list **token);
-t_ast	*create_op_node(t_list **tokens);
+t_ast		*parser(t_list **tokens);
+int			is_redirect(int type);
+int			is_op(int type);
+// t_ast		*add_redirect(t_list **token);
+
+// node cmd
+t_ast		*create_cmd_node(t_list **tokens);
+void		cmd_node_has_arg(t_ast *cmd_node, t_list **token);
+int			arg_count(t_list *token);
+
+// node pipe
+t_ast		*handle_pipe(t_ast *node, t_list **token);
+t_ast		*create_pipe_node(t_list **tokens);
+
+// node redir
+t_ast		*handle_redirect(t_ast *node, t_list **token, int is_first_call);
+t_redirect	*create_redir(t_list **token);
 
 // visualize
-void	prnt_token(t_list *token);
-void	prnt_ast(t_ast *node);
-void	node_prnter(t_ast *node);
+void		prnt_token(t_list *token);
+void		prnt_ast(t_ast *node, int level);
+void		node_prnter(t_ast *node);
 
 #endif
