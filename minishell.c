@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/27 09:08:36 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/29 11:17:13 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 // prnt_token(token);
 // prnt_ast(root, 0);
-void	scanning(char *line)
+void	scanning(t_sh *sh, char *line)
 {
 	t_list	*token;
 	t_ast	*root;
@@ -41,8 +41,11 @@ void	scanning(char *line)
 	}
 	token = NULL;
 	lexer(line, &token);
+	// prnt_token(token);
 	root = NULL;
 	root = parser(&token);
+	// prnt_ast(root, 0);
+	exec_ast(root, 0, 1, sh);
 	ft_out(token, root);
 }
 
@@ -50,7 +53,6 @@ void	minishell(t_sh *sh)
 {
 	char	*line;
 
-	(void) sh;
 	while (1)
 	{
 		sig_init();
@@ -65,7 +67,7 @@ void	minishell(t_sh *sh)
 		signal(SIGQUIT, sig_quit);
 		if (*line)
 			add_history(line);
-		scanning(line);
+		scanning(sh, line);
 	}
 }
 
@@ -95,4 +97,5 @@ int	main(int ac, char **av, char **env)
 	ft_memset(&sh, 0, sizeof(t_sh));
 	init_env(&sh, env);
 	minishell(&sh);
+	ft_freematrix(sh.env);
 }

@@ -6,7 +6,7 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/08/27 09:05:31 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/08/30 10:35:31 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC			= \
 			env.c \
 			token.c lexer.c parse.c visualize.c \
 			node_pipe.c node_cmd.c node_redir.c \
+			exec.c exec_cmd.c exec_export.c exec_unset.c exec_cd.c \
 
 OBJ			= $(SRC:.c=.o)
 

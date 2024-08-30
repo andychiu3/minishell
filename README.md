@@ -10,12 +10,12 @@ fork, dup, dup2, pipe,
 kill, wait, waitpid, wait3, wait4, 
 signal, sigaction, sigemptyset, sigaddset,
 
-getcwd, chdir, opendir, readdir, closedir,
+getcwd, chdir, opendir, readdir, closedir, access
 
 isatty, ttyname, ttyslot, ioctl,
 tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
-access, stat, lstat, fstat, unlink, 
+stat, lstat, fstat, unlink, 
 
 
 echo cd pwd export unset env exit
@@ -43,13 +43,13 @@ add_history
 - | PIPE
 - $ VAR
 - $?
-- echo -n
+- echo -n v
 - cd
-- pwd
-- export
+- pwd v
+- export v
 - unset
-- env
-- exit
+- env v
+- exit 1 2
 - readline() leaks in valgrind
 
 bonus

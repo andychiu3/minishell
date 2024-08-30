@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:28:34 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/26 16:33:22 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/29 08:55:17 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_ast	*parser(t_list **tokens)
 	{
 		if (((t_token *)((*tokens)->content))->type == CMD)
 		{
+			// printf("parser: hi\n");
 			if (!node)
 				node = create_cmd_node(tokens);
 		}
