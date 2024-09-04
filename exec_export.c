@@ -6,13 +6,13 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/29 21:48:19 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/31 13:46:33 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// return 1 if all the same then you do nothing
+// return 1 if name exists
 // return -1 if name exists then you have to change the *str
 // return 0 if name doesn't exist then 
 int	compare_env_var(char *env, char *arg)
@@ -92,6 +92,8 @@ void	exec_export(char *arg, t_sh *sh)
 				sh->env[i] = ft_strdup(arg);
 				return ;
 			}
+			else if (compare_env_var(sh->env[i], arg) == 1)
+				return ;
 		}
 		if (!sh->env[i])
 			update_env(arg, sh);

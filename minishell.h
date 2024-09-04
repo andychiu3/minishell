@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/30 09:34:40 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 00:01:35 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # include <term.h>
 # include <termios.h>
 
-# define PROMPT "minishell $ "
+# define PROMPT "\x1b[1;30mminishell $ \x1b[0m"
+
+int	g_last_exit_code;
 
 enum e_token
 {
@@ -114,9 +116,9 @@ int			is_append(char *str);
 // lexer
 // void	lexer(char *line);
 void		scanning(t_sh *sh, char *line);
-void		lexer(char *line, t_list **token);
+void		lexer(char *line, t_list **token, t_sh *sh);
 int			if_quote(char c, int quote);
-char		*extract(char *str, int *start, int *i);
+char		*extract(char *str, int *start, int *i, t_sh *sh);
 char		*remove_quote(char *str);
 int			quote_case(char *line);
 
@@ -167,5 +169,19 @@ void		update_env(char *arg, t_sh *sh);
 void		process_unset(t_cmd *cmd, t_sh *sh);
 void		exec_unset(char *arg, t_sh *sh);
 void		rm_env_var(char *arg, t_sh *sh);
+
+// exec cd
+void		process_cd(t_cmd *cmd, t_sh *sh);
+
+// exec others
+void		exec_with_execve(t_cmd *cmd, t_sh *sh);
+
+// splits by var
+char		**split_by_var(char *str);
+int			split_count(char *str);
+
+// var
+char		*var_situation(char *str, t_sh *sh);
+void		replace_var(char **strs, t_sh *sh);
 
 #endif

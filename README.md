@@ -10,7 +10,7 @@ fork, dup, dup2, pipe,
 kill, wait, waitpid, wait3, wait4, 
 signal, sigaction, sigemptyset, sigaddset,
 
-getcwd, chdir, opendir, readdir, closedir, access
+getcwd, chdir, opendir, readdir, closedir, access, getenv
 
 isatty, ttyname, ttyslot, ioctl,
 tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
@@ -21,11 +21,11 @@ stat, lstat, fstat, unlink,
 echo cd pwd export unset env exit
 - env
 export, VAR, unset, cd
-- ctrl C in bash
+- ctrl C in bash -> newline
 signal
-- ctrl D
+- ctrl D -> EOF
 exit -> ^D or \n
-- ctrl \
+- ctrl \ -> signal quit
 does nothing
 - tokenize
 - AST

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/30 10:34:50 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/02 11:41:28 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@ void	exec_echo(t_cmd *cmd, int in_fd, int out_fd)
 	int	i;
 	int	nextline;
 
-	if (!cmd)
+	if (!cmd || !cmd->arg)
 		return ;
 	(void)in_fd;
 	nextline = 1;
 	i = 0;
-	if (strncmp("-n", cmd->arg[i], ft_strlen(cmd->arg[i])) == 0)
+	if (strcmp("-n", cmd->arg[i]) == 0)
 	{
 		nextline = 0;
 		i++;
 	}
 	while (cmd->arg[i])
 	{
-		ft_putstr_fd(cmd->arg[i], out_fd);
+		if (cmd->arg[i])
+			ft_putstr_fd(cmd->arg[i], out_fd);
 		if (cmd->arg[i + 1])
 			ft_putchar_fd(' ', out_fd);
 		i++;
@@ -65,6 +66,14 @@ void	exec_env(t_cmd *cmd, int in_fd, int out_fd, t_sh *sh)
 		ft_putendl_fd(sh->env[i], out_fd);
 }
 
+void	exec_exit(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	// printf("hi\n");
+	exit(EXIT_SUCCESS);
+}
+
 void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 {
 	t_cmd	*cmd;
@@ -73,7 +82,7 @@ void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		return ;
 	(void)in_fd;
 	cmd = (t_cmd *)root->content;
-	if (strncmp(cmd->cmd, "echo", ft_strlen(cmd->cmd)) == 0)
+	if (strcmp(cmd->cmd, "echo") == 0)
 		exec_echo(cmd, in_fd, out_fd);
 	else if (strncmp(cmd->cmd, "pwd", ft_strlen(cmd->cmd)) == 0)
 		exec_pwd(cmd, in_fd, out_fd);
@@ -85,4 +94,11 @@ void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		process_unset(cmd, sh);
 	else if (strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
 		process_cd(cmd, sh);
+	else if (strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+		exec_exit(cmd);
+	else if (strcmp(cmd->cmd, "ls") == 0
+		|| strcmp(cmd->cmd, "clear") == 0
+		|| strcmp(cmd->cmd, "grep") == 0
+		|| strcmp(cmd->cmd, "cat") == 0)
+		exec_with_execve(cmd, sh);
 }

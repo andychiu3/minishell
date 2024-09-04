@@ -6,17 +6,20 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:35:44 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/05 12:53:27 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/02 12:50:14 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// replace_line does not exist in libedit of ARM struct macOS
+// rl_on_new_line and rl_redisplay behave differently?
 void	sig_int(int sig)
 {
 	(void)sig;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -26,8 +29,8 @@ void	sig_quit(int sig)
 	{
 		ft_putstr_fd("Quit: ", STDOUT_FILENO);
 		printf("%d\n", SIGQUIT);
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 09:05:44 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/27 09:06:22 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/08/31 14:14:54 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int	init_env(t_sh *sh, char **env)
 	i = -1;
 	while (env[++i])
 		sh->env[i] = ft_strdup(env[i]);
+	sh->env[i] = NULL;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:06:07 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/23 17:12:04 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/02 11:37:56 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int	is_cmd(char *str)
 		|| ft_strncmp(str, "export", sizeof(str)) == 0
 		|| ft_strncmp(str, "unset", sizeof(str)) == 0
 		|| ft_strncmp(str, "env", sizeof(str)) == 0
-		|| ft_strncmp(str, "exit", sizeof(str)) == 0);
+		|| ft_strncmp(str, "exit", sizeof(str)) == 0
+		|| ft_strcmp(str, "ls") == 0
+		|| ft_strcmp(str, "clear") == 0
+		|| ft_strcmp(str, "grep") == 0
+		|| ft_strcmp(str, "cat") == 0);
 }
 
 int	is_trunc(char *str)

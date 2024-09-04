@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/27 09:08:03 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/04 19:59:53 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*remove_quote(char *str)
 	char	*new;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	new = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!new)
 		return (NULL);
@@ -72,9 +74,10 @@ char	*remove_quote(char *str)
 // ignoring ' ' when no quote -> update START
 // no need to update the int *i tho
 // get the token->content if valid
-char	*extract(char *str, int *start, int *i)
+char	*extract(char *str, int *start, int *i, t_sh *sh)
 {
 	char	*new;
+	char	*tmp;
 
 	new = NULL;
 	if (*i == 0 || str[*i - 1] == ' ')
@@ -82,14 +85,22 @@ char	*extract(char *str, int *start, int *i)
 	else
 	{
 		new = ft_substr(str, *start, *i - *start);
-		new = remove_quote(new);
+		tmp = var_situation(new, sh);
+		free(new);
+		if (tmp)
+		{
+			new = remove_quote(tmp);
+			free(tmp);
+		}
+		else
+			new = NULL;
 		*start = *i + 1;
 	}
 	return (new);
 }
 
 // check the READLINE including last \0 so (int)ft_strlen(line) + 1
-void	lexer(char *line, t_list **token_list)
+void	lexer(char *line, t_list **token_list, t_sh *sh)
 {
 	int		quote;
 	int		i;
@@ -105,7 +116,7 @@ void	lexer(char *line, t_list **token_list)
 		quote = if_quote(line[i], quote);
 		if (quote == NONE && (line[i] == ' ' || line[i] == '\0'))
 		{
-			array = extract(line, &start, &i);
+			array = extract(line, &start, &i, sh);
 			if (array)
 			{
 				token = tokenize(array);
