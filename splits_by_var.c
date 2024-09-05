@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:11:28 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 00:02:22 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 11:03:46 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ void	var_ends(char *str, int *i, int *count)
 {
 	(*i)++;
 	if (str[*i] == '?')
-	{
 		(*i)++;
-		(*count)++;
-		return ;
-	}
-	while (ft_isalnum(str[*i]) || str[*i] == '_')
-		(*i)++;
+	else
+		while (ft_isalnum(str[*i]) || str[*i] == '_')
+			(*i)++;
 	if (count != NULL)
 		(*count)++;
 }

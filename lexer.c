@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/04 19:59:53 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 10:21:24 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*remove_quote(char *str)
 {
 	char	*new;
 	int		i;
+	int		quote;
 
 	if (!str)
 		return (NULL);
@@ -61,9 +62,14 @@ char	*remove_quote(char *str)
 	if (!new)
 		return (NULL);
 	i = 0;
+	quote = NONE;
 	while (*str)
 	{
+		quote = if_quote(*str, quote);
 		if (*str != '\'' && *str != '\"')
+			new[i++] = *str;
+		else if ((*str == '\'' && quote == DOUBLE)
+			|| (*str == '\"' && quote == SINGLE))
 			new[i++] = *str;
 		str++;
 	}

@@ -6,11 +6,24 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/04 21:29:53 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 14:17:11 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	prnt_error_update_exit_code(char *why, int code)
+// {
+// 	if (strcmp(why, "syntax"))
+// 	{
+
+// 	}
+// 	else if (strcmp(why, "cmd"))
+// 	else if (strcmp(why, "arg"))
+// 	{
+// 		printf("minishell: %s: ")
+// 	}
+// }
 
 // prnt_token(token);
 // prnt_ast(root, 0);
@@ -61,6 +74,7 @@ void	minishell(t_sh *sh)
 		scanning(sh, line);
 		free(line);
 	}
+	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)
@@ -70,7 +84,7 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	ft_memset(&sh, 0, sizeof(t_sh));
-	// g_last_exit_code = 0;
+	g_last_exit_code = 0;
 	init_env(&sh, env);
 	minishell(&sh);
 	ft_freematrix(sh.env);

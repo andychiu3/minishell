@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/31 13:46:33 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 11:50:42 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ void	exec_export(char *arg, t_sh *sh)
 			update_env(arg, sh);
 	}
 	else if (is_valid_identifier(arg) == -1)
+	{
+		g_last_exit_code = 1;
 		printf("minishell: export: '%s': not a valid identifier\n", arg);
+	}
 }
 
 void	process_export(t_cmd *cmd, t_sh *sh)

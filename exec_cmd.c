@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/02 11:41:28 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/05 12:15:28 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	exec_exit(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	// printf("hi\n");
+	if (cmd->arg && *(cmd->arg))
+		printf("minishell: %s: %s: numeric argument required\n"
+			, cmd->cmd, cmd->arg[0]);
 	exit(EXIT_SUCCESS);
 }
 
