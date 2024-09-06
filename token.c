@@ -43,13 +43,13 @@ int	is_append(char *str)
 		|| ft_strncmp(str, "1>>&2", sizeof(str)) == 0);
 }
 
-t_token	*tokenize(char *array)
+void	tokenize(char *array, t_list **token_list)
 {
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		return ;
 	if (is_cmd(array))
 		token->type = CMD;
 	else if (ft_strncmp(array, "|", sizeof(array)) == 0)
@@ -67,5 +67,5 @@ t_token	*tokenize(char *array)
 	else
 		token->type = ARG;
 	token->content = array;
-	return (token);
+	ft_lstadd_back(token_list, ft_lstnew((void *)token));
 }

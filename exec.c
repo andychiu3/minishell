@@ -56,6 +56,8 @@ void	process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 			return ;
+		if (out_fd != STDOUT_FILENO)
+			close(out_fd);
 		out_fd = fd;
 	}
 	else if (root->type == APPEND)
@@ -93,7 +95,11 @@ void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		exec_cmd(root, STDIN_FILENO, STDOUT_FILENO, sh);
 	}
 	else if (pid > 0)
+	{
+		close(in_fd);
+		close(out_fd);
 		waitpid(pid, &status, 0);
+	}
 }
 
 void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)

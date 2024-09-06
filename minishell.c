@@ -41,11 +41,11 @@ void	scanning(t_sh *sh, char *line)
 	}
 	token = NULL;
 	lexer(line, &token, sh);
-	// prnt_token(token);
+	prnt_token(token);
 	root = NULL;
 	root = parser(&token);
 	// prnt_ast(root, 0);
-	exec_ast(root, 0, 1, sh);
+	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
 	ft_out(token, root);
 }
 
@@ -88,4 +88,5 @@ int	main(int ac, char **av, char **env)
 	init_env(&sh, env);
 	minishell(&sh);
 	ft_freematrix(sh.env);
+	// malloc_printf("Leaked memory: %zu bytes\n", malloc_size(0));
 }

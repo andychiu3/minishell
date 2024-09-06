@@ -25,6 +25,7 @@
 # include <curses.h>
 # include <term.h>
 # include <termios.h>
+# include <malloc/malloc.h>
 
 # define PROMPT "\x1b[1;30mminishell $ \x1b[0m"
 
@@ -108,7 +109,7 @@ void		disable_ctrl_echo(void);
 // char	*extract_(char **line, char c);
 
 // token
-t_token		*tokenize(char *array);
+void		tokenize(char *array, t_list **token_list);
 int			is_cmd(char *str);
 int			is_trunc(char *str);
 int			is_append(char *str);

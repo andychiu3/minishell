@@ -105,6 +105,23 @@ char	*extract(char *str, int *start, int *i, t_sh *sh)
 	return (new);
 }
 
+//
+char	*extract_op(char *str, int *start, int *i)
+{
+	char	*new;
+
+	new = NULL;
+	(*start)--;
+	*i = *start + 1;
+	printf("i: %d\n", *i);
+	if (str[*start] == '>' || str[*start] == '<')
+		if (str[*start] == str[*start + 1])
+			(*i)++;
+	new = ft_substr(str, *start, (*i) - *start);
+	*start = (*i);
+	return (new);
+}
+
 // check the READLINE including last \0 so (int)ft_strlen(line) + 1
 void	lexer(char *line, t_list **token_list, t_sh *sh)
 {
@@ -112,7 +129,6 @@ void	lexer(char *line, t_list **token_list, t_sh *sh)
 	int		i;
 	int		start;
 	char	*array;
-	t_token	*token;
 
 	start = 0;
 	quote = NONE;
@@ -120,17 +136,23 @@ void	lexer(char *line, t_list **token_list, t_sh *sh)
 	while (++i < (int)ft_strlen(line) + 1)
 	{
 		quote = if_quote(line[i], quote);
-		if (quote == NONE && (line[i] == ' ' || line[i] == '\0'))
+		if (quote == NONE
+			&& (line[i] == ' ' || line[i] == '\0'))
 		{
 			array = extract(line, &start, &i, sh);
 			if (array)
-			{
-				token = tokenize(array);
-				ft_lstadd_back(token_list, ft_lstnew((void *)token));
-			}
+				tokenize(array, token_list);
+			// if (line[i] && ft_strchr("|<>", line[i]))
+			// {
+			// 	array = extract_op(line, &start, &i);
+			// 	if (array)
+			// 		tokenize(array, token_list);
+			// }
 		}
 	}
 }
+
+//  || ft_strchr("|<>", line[i])
 
 // void	scanning(char *line)
 // {
