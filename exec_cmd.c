@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 12:15:28 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 09:07:39 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	exec_exit(t_cmd *cmd)
 	if (!cmd)
 		return ;
 	if (cmd->arg && *(cmd->arg))
-		printf("minishell: %s: %s: numeric argument required\n"
-			, cmd->cmd, cmd->arg[0]);
+		printf("minishell: %s: %s: numeric argument required\n",
+			cmd->cmd, cmd->arg[0]);
 	exit(EXIT_SUCCESS);
 }
 
@@ -84,23 +84,26 @@ void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		return ;
 	(void)in_fd;
 	cmd = (t_cmd *)root->content;
-	if (strcmp(cmd->cmd, "echo") == 0)
+	if (strcmp(cmd->cmd, "/bin/echo") == 0)
 		exec_echo(cmd, in_fd, out_fd);
-	else if (strncmp(cmd->cmd, "pwd", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "/bin/pwd") == 0)
 		exec_pwd(cmd, in_fd, out_fd);
-	else if (strncmp(cmd->cmd, "env", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "/usr/bin/env") == 0)
 		exec_env(cmd, in_fd, out_fd, sh);
-	else if (strncmp(cmd->cmd, "export", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "export") == 0)
 		process_export(cmd, sh);
-	else if (strncmp(cmd->cmd, "unset", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "unset") == 0)
 		process_unset(cmd, sh);
-	else if (strncmp(cmd->cmd, "cd", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "/usr/bin/cd") == 0)
 		process_cd(cmd, sh);
-	else if (strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+	else if (strcmp(cmd->cmd, "exit") == 0)
 		exec_exit(cmd);
-	else if (strcmp(cmd->cmd, "ls") == 0
-		|| strcmp(cmd->cmd, "clear") == 0
-		|| strcmp(cmd->cmd, "grep") == 0
-		|| strcmp(cmd->cmd, "cat") == 0)
+	else if (is_executable(cmd->cmd, sh))
 		exec_with_execve(cmd, sh);
 }
+
+// else if (strcmp(cmd->cmd, "ls") == 0
+// 		|| strcmp(cmd->cmd, "clear") == 0
+// 		|| strcmp(cmd->cmd, "grep") == 0
+// 		|| strcmp(cmd->cmd, "cat") == 0)
+// 		exec_with_execve(cmd, sh);

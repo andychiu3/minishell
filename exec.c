@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:18:17 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/29 11:23:20 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 08:59:09 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 	int		status;
 
 	pid = fork();
+	// printf("pid: %d, getpid: %d\n", pid, getpid());
 	if (pid == 0)
 	{
 		if (in_fd != STDIN_FILENO)
@@ -96,10 +97,14 @@ void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 	}
 	else if (pid > 0)
 	{
-		close(in_fd);
-		close(out_fd);
+		if (in_fd != STDIN_FILENO)
+			close(in_fd);
+		if (out_fd != STDOUT_FILENO)
+			close(out_fd);
 		waitpid(pid, &status, 0);
 	}
+	// else
+	// 	perror("fork failed");
 }
 
 void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)

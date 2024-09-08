@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 10:21:24 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/07 20:18:16 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	lexer(char *line, t_list **token_list, t_sh *sh)
 		{
 			array = extract(line, &start, &i, sh);
 			if (array)
-				tokenize(array, token_list);
+				tokenize(array, token_list, sh);
 			// if (line[i] && ft_strchr("|<>", line[i]))
 			// {
 			// 	array = extract_op(line, &start, &i);

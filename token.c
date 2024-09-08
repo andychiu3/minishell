@@ -6,25 +6,45 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:06:07 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/02 11:37:56 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 09:12:47 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_cmd(char *str)
+// int	is_cmd(char *str, t_sh *sh)
+// {
+// 	return (ft_strncmp(str, "echo", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "cd", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "pwd", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "export", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "unset", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "env", sizeof(str)) == 0
+// 		|| ft_strncmp(str, "exit", sizeof(str)) == 0
+// 		|| ft_strcmp(str, "ls") == 0
+// 		|| ft_strcmp(str, "clear") == 0
+// 		|| ft_strcmp(str, "grep") == 0
+// 		|| ft_strcmp(str, "cat") == 0
+// 		|| is_executable(str, sh));
+// }
+
+int	is_cmd(char **str, t_sh *sh)
 {
-	return (ft_strncmp(str, "echo", sizeof(str)) == 0
-		|| ft_strncmp(str, "cd", sizeof(str)) == 0
-		|| ft_strncmp(str, "pwd", sizeof(str)) == 0
-		|| ft_strncmp(str, "export", sizeof(str)) == 0
-		|| ft_strncmp(str, "unset", sizeof(str)) == 0
-		|| ft_strncmp(str, "env", sizeof(str)) == 0
-		|| ft_strncmp(str, "exit", sizeof(str)) == 0
-		|| ft_strcmp(str, "ls") == 0
-		|| ft_strcmp(str, "clear") == 0
-		|| ft_strcmp(str, "grep") == 0
-		|| ft_strcmp(str, "cat") == 0);
+	char	*path;
+
+	if (ft_strcmp(*str, "export") == 0
+		|| ft_strcmp(*str, "unset") == 0
+		|| ft_strcmp(*str, "exit") == 0)
+		return (1);
+	path = is_executable(*str, sh);
+	if (path)
+	{
+		free(*str);
+		*str = path;
+		return (1);
+	}
+	else
+		return (0);
 }
 
 int	is_trunc(char *str)
@@ -43,14 +63,14 @@ int	is_append(char *str)
 		|| ft_strncmp(str, "1>>&2", sizeof(str)) == 0);
 }
 
-void	tokenize(char *array, t_list **token_list)
+void	tokenize(char *array, t_list **token_list, t_sh *sh)
 {
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return ;
-	if (is_cmd(array))
+	if (is_cmd(&array, sh))
 		token->type = CMD;
 	else if (ft_strncmp(array, "|", sizeof(array)) == 0)
 		token->type = PIPE;

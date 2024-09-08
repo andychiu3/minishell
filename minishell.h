@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/05 00:01:35 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 09:12:14 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,13 @@ void		sig_int(int sig);
 void		sig_quit(int sig);
 void		disable_ctrl_echo(void);
 
-// check
-// void	lexical(char *line);
-// int		quote_case(char *line);
-// void	tokenize(char *line, t_list **token);
-// char	*extract_quote(char **line, char c);
-// char	*remove_quote(char *str);
-// char	*extract_(char **line, char c);
-
 // token
-void		tokenize(char *array, t_list **token_list);
-int			is_cmd(char *str);
+void		tokenize(char *array, t_list **token_list, t_sh *sh);
+int			is_cmd(char **str, t_sh *sh);
 int			is_trunc(char *str);
 int			is_append(char *str);
 
 // lexer
-// void	lexer(char *line);
 void		scanning(t_sh *sh, char *line);
 void		lexer(char *line, t_list **token, t_sh *sh);
 int			if_quote(char c, int quote);
@@ -157,6 +148,9 @@ void		process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		exec_echo(t_cmd *cmd, int in_fd, int out_fd);
 void		exec_pwd(t_cmd *cmd, int in_fd, int out_fd);
+
+// executable cmd
+char		*is_executable(char *str, t_sh *sh);
 
 // exec export
 // void		exec_export(t_cmd *cmd, t_sh *sh);
