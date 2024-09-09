@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/08 09:12:14 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/09 10:41:06 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ int			is_append(char *str);
 void		scanning(t_sh *sh, char *line);
 void		lexer(char *line, t_list **token, t_sh *sh);
 int			if_quote(char c, int quote);
-char		*extract(char *str, int *start, int *i, t_sh *sh);
+// char		*extract(char *str, int *start, int *i, t_sh *sh);
 char		*remove_quote(char *str);
 int			quote_case(char *line);
+char		*extract(char *str, int *i, t_sh *sh, int *quote);
 
 // parse
 t_ast		*parser(t_list **tokens);
@@ -148,6 +149,7 @@ void		process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		exec_echo(t_cmd *cmd, int in_fd, int out_fd);
 void		exec_pwd(t_cmd *cmd, int in_fd, int out_fd);
+void		exec_env(t_cmd *cmd, int in_fd, int out_fd, t_sh *sh);
 
 // executable cmd
 char		*is_executable(char *str, t_sh *sh);
@@ -178,5 +180,8 @@ int			split_count(char *str);
 // var
 char		*var_situation(char *str, t_sh *sh);
 void		replace_var(char **strs, t_sh *sh);
+
+// error
+char		*errormsg_exitcode(char *why, int exit_code, char *str);
 
 #endif

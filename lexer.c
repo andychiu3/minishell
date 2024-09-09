@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/07 20:18:16 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/09 09:51:10 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,49 +80,74 @@ char	*remove_quote(char *str)
 // ignoring ' ' when no quote -> update START
 // no need to update the int *i tho
 // get the token->content if valid
-char	*extract(char *str, int *start, int *i, t_sh *sh)
+// char	*extract(char *str, int *start, int *i, t_sh *sh)
+// {
+// 	char	*new;
+// 	char	*tmp;
+
+// 	new = NULL;
+// 	if (*i == 0 || str[*i - 1] == ' ')
+// 		(*start) = *i + 1;
+// 	else
+// 	{
+// 		new = ft_substr(str, *start, *i - *start);
+// 		tmp = var_situation(new, sh);
+// 		free(new);
+// 		if (tmp)
+// 		{
+// 			new = remove_quote(tmp);
+// 			free(tmp);
+// 		}
+// 		else
+// 			new = NULL;
+// 		*start = *i + 1;
+// 	}
+// 	return (new);
+// }
+
+char	*extract(char *str, int *i, t_sh *sh, int *quote)
 {
 	char	*new;
 	char	*tmp;
+	int		start;
 
 	new = NULL;
-	if (*i == 0 || str[*i - 1] == ' ')
-		(*start) = *i + 1;
-	else
+	start = *i;
+	while (*i < (int)ft_strlen(str))
 	{
-		new = ft_substr(str, *start, *i - *start);
-		tmp = var_situation(new, sh);
-		free(new);
-		if (tmp)
-		{
-			new = remove_quote(tmp);
-			free(tmp);
-		}
-		else
-			new = NULL;
-		*start = *i + 1;
+		if (*quote == NONE && (ft_strchr("|<>", str[*i]) || str[*i] == ' '))
+			break ;
+		(*i)++;
+		*quote = if_quote(str[*i], *quote);
 	}
+	new = ft_substr(str, start, *i - start);
+	tmp = var_situation(new, sh);
+	free(new);
+	if (tmp)
+	{
+		new = remove_quote(tmp);
+		free(tmp);
+	}
+	else
+		new = NULL;
 	return (new);
 }
 
-//
 char	*extract_op(char *str, int *start, int *i)
 {
 	char	*new;
 
 	new = NULL;
-	(*start)--;
-	*i = *start + 1;
-	printf("i: %d\n", *i);
+	// printf("before i: %d, s: %d\n", *i, *start);
+	(*i)++;
 	if (str[*start] == '>' || str[*start] == '<')
 		if (str[*start] == str[*start + 1])
 			(*i)++;
 	new = ft_substr(str, *start, (*i) - *start);
-	*start = (*i);
+	// printf("after i: %d, s: %d\n", *i, *start);
 	return (new);
 }
 
-// check the READLINE including last \0 so (int)ft_strlen(line) + 1
 void	lexer(char *line, t_list **token_list, t_sh *sh)
 {
 	int		quote;
@@ -130,47 +155,62 @@ void	lexer(char *line, t_list **token_list, t_sh *sh)
 	int		start;
 	char	*array;
 
-	start = 0;
 	quote = NONE;
-	i = -1;
-	while (++i < (int)ft_strlen(line) + 1)
+	i = 0;
+	while (i < (int)ft_strlen(line))
 	{
+		start = i;
+		// printf("char c: %c\n", line[i]);
 		quote = if_quote(line[i], quote);
-		if (quote == NONE
-			&& (line[i] == ' ' || line[i] == '\0'))
+		if (quote == NONE && line[i] == ' ')
 		{
-			array = extract(line, &start, &i, sh);
-			if (array)
-				tokenize(array, token_list, sh);
-			// if (line[i] && ft_strchr("|<>", line[i]))
-			// {
-			// 	array = extract_op(line, &start, &i);
-			// 	if (array)
-			// 		tokenize(array, token_list);
-			// }
+			while (quote == NONE && line[i] == ' ')
+			{
+				// printf("skip space and i: %d\n", i);
+				i++;
+			}
+			continue ;
 		}
+		else if (quote == NONE && ft_strchr("|<>", line[i]))
+		{
+			// printf("op and i: %d\n", i);
+			array = extract_op(line, &start, &i);
+		}
+		else
+		{
+			// printf("words and i: %d\n", i);
+			array = extract(line, &i, sh, &quote);
+		}
+		if (array)
+		{
+			tokenize(array, token_list, sh);
+			// free(array);
+		}
+		// printf("\n");
 	}
 }
 
-//  || ft_strchr("|<>", line[i])
-
-// void	scanning(char *line)
+// check the READLINE including last \0 so (int)ft_strlen(line) + 1
+// void	lexer(char *line, t_list **token_list, t_sh *sh)
 // {
-// 	t_list	*token;
-// 	t_ast	*root;
+// 	int		quote;
+// 	int		i;
+// 	int		start;
+// 	char	*array;
 
-// 	if (!line)
-// 		return ;
-// 	if (!quote_case(line))
+// 	start = 0;
+// 	quote = NONE;
+// 	i = -1;
+// 	while (++i < (int)ft_strlen(line) + 1)
 // 	{
-// 		printf("unclosed quotes\n");
-// 		return ;
+// 		quote = if_quote(line[i], quote);
+// 		if (quote == NONE
+// 			&& (line[i] == ' ' || line[i] == '\0' ))
+// 		{
+// 			array = extract(line, &start, &i, sh);
+// 			if (array)
+// 				tokenize(array, token_list, sh);
+// 		}
 // 	}
-// 	token = NULL;
-// 	lexer(line, &token);
-// 	// prnt_token(token);
-// 	root = NULL;
-// 	root = parser(&token);
-// 	// prnt_ast(root, 0);
-// 	ft_out(token, root);
 // }
+//  || ft_strchr("|<>", line[i])

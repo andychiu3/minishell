@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 10:10:31 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/08 09:01:20 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 14:05:28 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*is_executable(char *str, t_sh *sh)
 	int		i;
 	char	*tmp;
 
+	if (!str || !*str)
+		return (NULL);
 	if (ft_strchr(str, '/'))
 	{
 		if (access(str, F_OK | X_OK) == 0)

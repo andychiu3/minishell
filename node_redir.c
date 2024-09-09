@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 19:56:24 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/26 16:31:26 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/09 10:43:04 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_redirect	*create_redir(t_list **token)
 	ft_memset(redir, 0, sizeof(t_redirect));
 	redir->redir = ft_strdup(((t_token *)(*token)->content)->content);
 	*token = (*token)->next;
-	if (is_op(((t_token *)(*token)->content)->type))
+	if (token && *token && is_op(((t_token *)(*token)->content)->type))
 		return (NULL);
 	if (token && *token && (*token)->content)
 	{
@@ -36,6 +36,8 @@ t_ast	*handle_redirect(t_ast *node, t_list **token, int is_first_call)
 {
 	t_ast	*redir_node;
 
+	if (!node)
+		return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
 	redir_node = malloc(sizeof(t_ast));
 	if (!redir_node)
 		return (NULL);
@@ -51,5 +53,7 @@ t_ast	*handle_redirect(t_ast *node, t_list **token, int is_first_call)
 	}
 	if (*token && is_redirect(((t_token *)(*token)->content)->type))
 		redir_node->right = handle_redirect(node, token, 0);
+	if (!redir_node->right)
+		return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
 	return (redir_node);
 }

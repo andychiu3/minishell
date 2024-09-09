@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 09:48:03 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/24 10:32:37 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/09 10:54:47 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,14 @@ t_ast	*handle_pipe(t_ast *node, t_list **token)
 	t_ast	*op_node;
 
 	if (!node)
-	{
-		printf("minishell: syntax error near unexpected token '%s'\n",
-			(char *)((t_token *)((*token)->content))->content);
-		return (NULL);
-	}
+		return ((t_ast *)errormsg_exitcode("sytax", 258,
+				(char *)((t_token *)((*token)->content))->content));
 	op_node = create_pipe_node(token);
 	op_node->left = node;
 	if (token && *token && !is_redirect(((t_token *)((*token)->content))->type))
 		op_node->right = parser(token);
 	if (!op_node->right)
-	{
-		printf("minishell: syntax error near unexpected token '%s'\n",
-			(char *)((t_token *)((*token)->content))->content);
-		return (NULL);
-	}
+		return ((t_ast *)errormsg_exitcode("sytax", 258, "|"));
+	printf("hi\n");
 	return (op_node);
 }

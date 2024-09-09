@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:06:07 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/08 09:12:47 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/08 17:41:44 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@ int	is_cmd(char **str, t_sh *sh)
 {
 	char	*path;
 
+	if (ft_strcmp(*str, "..") == 0 || ft_strcmp(*str, ".") == 0)
+		return (0);
 	if (ft_strcmp(*str, "export") == 0
 		|| ft_strcmp(*str, "unset") == 0
 		|| ft_strcmp(*str, "exit") == 0)
 		return (1);
 	path = is_executable(*str, sh);
 	if (path)
-	{
-		free(*str);
-		*str = path;
 		return (1);
-	}
 	else
 		return (0);
 }

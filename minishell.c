@@ -6,24 +6,31 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/05 14:17:11 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/09 10:46:57 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	prnt_error_update_exit_code(char *why, int code)
-// {
-// 	if (strcmp(why, "syntax"))
-// 	{
-
-// 	}
-// 	else if (strcmp(why, "cmd"))
-// 	else if (strcmp(why, "arg"))
-// 	{
-// 		printf("minishell: %s: ")
-// 	}
-// }
+char	*errormsg_exitcode(char *why, int exit_code, char *str)
+{
+	if (strcmp(why, "syntax"))
+	{
+		printf("minishell: syntax error near unexpected token");
+		if (str)
+			printf(" `%s'\n", str);
+		else
+			printf("`newline'\n");
+	}
+	else if (strcmp(why, "nocmd"))
+		printf("minishell %s: command not found\n", str);
+	else
+	{
+		printf("minishell: %s: %s: numeric argument required\n", str, why);
+	}
+	g_last_exit_code = exit_code;
+	return (NULL);
+}
 
 // prnt_token(token);
 // prnt_ast(root, 0);
@@ -46,6 +53,7 @@ void	scanning(t_sh *sh, char *line)
 	root = parser(&token);
 	// prnt_ast(root, 0);
 	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
+	// printf("hi\n");
 	ft_out(token, root);
 }
 
