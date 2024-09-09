@@ -100,8 +100,8 @@ void	exec_export(char *arg, t_sh *sh)
 	}
 	else if (is_valid_identifier(arg) == -1)
 	{
-		g_last_exit_code = 1;
-		printf("minishell: export: '%s': not a valid identifier\n", arg);
+		errormsg_exitcode("id", 1, arg);
+		exit(EXIT_FAILURE);
 	}
 }
 

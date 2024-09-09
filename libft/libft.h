@@ -106,5 +106,6 @@ char	*get_next_line(int fd);
 void	ft_freematrix(char **matrix);
 int		ft_strs_count(char **strs);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_isnbr(char *str);
 
 #endif

@@ -37,7 +37,7 @@ t_ast	*handle_redirect(t_ast *node, t_list **token, int is_first_call)
 	t_ast	*redir_node;
 
 	if (!node)
-		return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
+		return ((t_ast *)errormsg_exitcode("syntax", 258, NULL));
 	redir_node = malloc(sizeof(t_ast));
 	if (!redir_node)
 		return (NULL);
@@ -53,7 +53,7 @@ t_ast	*handle_redirect(t_ast *node, t_list **token, int is_first_call)
 	}
 	if (*token && is_redirect(((t_token *)(*token)->content)->type))
 		redir_node->right = handle_redirect(node, token, 0);
-	if (!redir_node->right)
-		return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
+	// if (!redir_node->right)
+	// 	return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
 	return (redir_node);
 }

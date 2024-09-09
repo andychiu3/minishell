@@ -34,14 +34,14 @@ t_ast	*handle_pipe(t_ast *node, t_list **token)
 	t_ast	*op_node;
 
 	if (!node)
-		return ((t_ast *)errormsg_exitcode("sytax", 258,
+		return ((t_ast *)errormsg_exitcode("syntax", 258,
 				(char *)((t_token *)((*token)->content))->content));
 	op_node = create_pipe_node(token);
 	op_node->left = node;
 	if (token && *token && !is_redirect(((t_token *)((*token)->content))->type))
 		op_node->right = parser(token);
 	if (!op_node->right)
-		return ((t_ast *)errormsg_exitcode("sytax", 258, "|"));
+		return ((t_ast *)errormsg_exitcode("syntax", 258, "|"));
 	printf("hi\n");
 	return (op_node);
 }

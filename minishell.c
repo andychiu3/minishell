@@ -14,7 +14,8 @@
 
 char	*errormsg_exitcode(char *why, int exit_code, char *str)
 {
-	if (strcmp(why, "syntax"))
+	printf("why: %s\n", why);
+	if (ft_strcmp(why, "syntax") == 0)
 	{
 		printf("minishell: syntax error near unexpected token");
 		if (str)
@@ -22,9 +23,17 @@ char	*errormsg_exitcode(char *why, int exit_code, char *str)
 		else
 			printf("`newline'\n");
 	}
-	else if (strcmp(why, "nocmd"))
+	else if (ft_strcmp(why, "nocmd") == 0)
 		printf("minishell %s: command not found\n", str);
-	else
+	else if (ft_strcmp(why, "EOF") == 0)
+	{
+		printf("minishell: unexpected EOF while looking for matching `%s'\n",
+			str);
+		printf("minishell: syntax error: unexpected end of file\n");
+	}
+	else if (ft_strcmp(why, "id") == 0)
+		printf("minishell: export: '%s': not a valid identifier\n", str);
+	else if (ft_strcmp(why, "exit") == 0)
 	{
 		printf("minishell: %s: %s: numeric argument required\n", str, why);
 	}
@@ -53,7 +62,6 @@ void	scanning(t_sh *sh, char *line)
 	root = parser(&token);
 	// prnt_ast(root, 0);
 	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
-	// printf("hi\n");
 	ft_out(token, root);
 }
 
@@ -67,6 +75,7 @@ void	minishell(t_sh *sh)
 		line = readline(PROMPT);
 		if (!line)
 		{
+			// exec_exit(NULL);
 			// printf("\033[1A\033[0K");
 			// printf(PROMPT);
 			// printf("\n");

@@ -36,10 +36,10 @@ readline
 add_history
 - ''
 - "$"
-- < INPUT
-- > TRUNC
-- << HEREDOC 
-- >> APPEND 
+- < INPUT 4
+- > TRUNC 5
+- << HEREDOC 7
+- >> APPEND 6
 - | PIPE
 - $ VAR
 - $?

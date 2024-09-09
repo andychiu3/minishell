@@ -33,7 +33,7 @@ void	exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		exec_ast(root->right, pipe_fd[0], out_fd, sh);
 		close(pipe_fd[0]);
 		waitpid(pid, NULL, 0);
-		printf("hi\n");
+		printf("exec_pipe: hi\n");
 	}
 }
 
@@ -67,10 +67,7 @@ void	process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		redir = (t_redirect *)(root->content);
 		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-		{
-			printf("error\n");
 			return ;
-		}
 		if (out_fd != STDOUT_FILENO)
 			close(out_fd);
 		out_fd = fd;
@@ -81,12 +78,18 @@ void	process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		close (fd);
 }
 
+//	if (WIFEXITED(status))
+//		printf("Child exited normally with status %d\n", WEXITSTATUS(status));
+//	else if (WIFSIGNALED(status))
+//		printf("Child terminated by signal %d\n", WTERMSIG(status));
+//	else if (WIFSTOPPED(status))
+//		printf("Child stopped by signal %d\n", WSTOPSIG(status));
+//	else
+//		printf("Child exited for unknown reason\n");
 void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 {
 	pid_t	pid;
 	int		status;
-	// int		saved_stdin = dup(STDIN_FILENO);
-	// int		saved_stdout = dup(STDOUT_FILENO);
 
 	pid = fork();
 	if (pid == 0)
@@ -102,6 +105,7 @@ void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 			close(out_fd);
 		}
 		exec_cmd(root, STDIN_FILENO, STDOUT_FILENO, sh);
+		// printf("process_cmd child: hi\n");
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
@@ -111,21 +115,9 @@ void	process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		if (out_fd != STDOUT_FILENO)
 			close(out_fd);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-            printf("Child exited normally with status %d\n", WEXITSTATUS(status));
-        else if (WIFSIGNALED(status))
-            printf("Child terminated by signal %d\n", WTERMSIG(status));
-        else if (WIFSTOPPED(status))
-            printf("Child stopped by signal %d\n", WSTOPSIG(status));
-        else
-            printf("Child exited for unknown reason\n");
-		// dup2(saved_stdin, STDIN_FILENO);
-		// dup2(saved_stdout, STDOUT_FILENO);
-		// close(saved_stdin);
-		// close(saved_stdout);
+		// printf("process_cmd parent: hi\n");
+		g_last_exit_code = WEXITSTATUS(status);
 	}
-	// else
-	// 	perror("fork failed");
 }
 
 void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)

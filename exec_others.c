@@ -56,7 +56,7 @@ void	exec_with_execve(t_cmd *cmd, t_sh *sh)
 	printf("Executing: %s\n", arg[0]);
 	execve(arg[0], arg, sh->env);
 	// printf("%s\n", full_path);
-	perror("execve failed");
+	// perror("execve failed");
 	// free(full_path);
 	if (arg)
 		ft_freematrix(arg);

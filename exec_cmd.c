@@ -65,16 +65,36 @@ void	exec_env(t_cmd *cmd, int in_fd, int out_fd, t_sh *sh)
 	i = -1;
 	while (sh->env[++i])
 		ft_putendl_fd(sh->env[i], STDOUT_FILENO);
+	// exit(EXIT_SUCCESS);
 }
 
 void	exec_exit(t_cmd *cmd)
 {
+	int	exit_nbr;
+
 	if (!cmd)
 		return ;
-	if (cmd->arg && *(cmd->arg))
-		printf("minishell: %s: %s: numeric argument required\n",
-			cmd->cmd, cmd->arg[0]);
-	exit(EXIT_SUCCESS);
+	exit_nbr = 0;
+	if (cmd->arg)
+	{
+		if (ft_isnbr(cmd->arg[0]))
+			exit_nbr = ft_atoi(cmd->arg[0]);
+		else
+		{
+			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
+			ft_putstr_fd(cmd->arg[0], STDOUT_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
+			exit_nbr = 1;
+			exit(exit_nbr % 256);
+		}
+	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	if (cmd->arg && cmd->arg[1])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDOUT_FILENO);
+		exit_nbr = 1;
+	}
+	exit(exit_nbr % 256);
 }
 
 void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)

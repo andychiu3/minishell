@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-void	prnt_strs(char **strs)
-{
-	if (!strs || !*strs)
-		return ;
-	while (*strs)
-		printf("%s\n", *strs++);
-}
-
 // char c to char *?
 void	replace_var(char **strs, t_sh *sh)
 {

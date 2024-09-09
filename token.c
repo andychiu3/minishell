@@ -78,7 +78,7 @@ void	tokenize(char *array, t_list **token_list, t_sh *sh)
 		token->type = INPUT;
 	else if (is_trunc(array))
 		token->type = TRUNC;
-	else if (ft_strncmp(">>", array, sizeof(array)) == 0)
+	else if (ft_strncmp("<<", array, sizeof(array)) == 0)
 		token->type = HEREDOC;
 	else if (is_append(array))
 		token->type = APPEND;

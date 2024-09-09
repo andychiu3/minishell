@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+void	prnt_strs(char **strs)
+{
+	if (!strs || !*strs)
+		return ;
+	while (*strs)
+		printf("%s\n", *strs++);
+}
+
 void	prnt_token(t_list *token)
 {
 	t_token	*t;

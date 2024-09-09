@@ -22,7 +22,7 @@ SRC			=  \
 			ft_printf.c ft_nbr.c ft_char.c ft_hex.c \
 			get_next_line.c \
 			ft_freematrix.c ft_strs_count.c \
-			ft_strcmp.c \
+			ft_strcmp.c ft_isnbr.c\
 				
 OBJ			= ${SRC:.c=.o}
 
