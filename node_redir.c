@@ -6,12 +6,57 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 19:56:24 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/09 10:43:04 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 15:48:25 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	add_str_to_strs(char ***strs, char *str)
+{
+	char	**tmp;
+	int		i;
+
+	if (!str)
+		return ;
+	tmp = malloc(sizeof(char *) * (ft_strs_count(*strs) + 2));
+	if (!tmp)
+		return ;
+	i = -1;
+	while ((*strs)[++i])
+		tmp[i] = ft_strdup((*strs)[i]);
+	tmp[i++] = ft_strdup(str);
+	tmp[i] = NULL;
+	ft_freematrix(*strs);
+	*strs = tmp;
+}
+
+void	append_cmd_args(t_ast **node, t_list **token)
+{
+	t_cmd	*cmd;
+
+	if (!*node)
+	{
+		*node = create_cmd_node(token);
+		// if (node)
+		// {
+		// 	cmd = (t_cmd *)(node->content);
+		// 	printf("cmd: %s\n", cmd->cmd);
+		// 	prnt_strs(cmd->arg);
+		// }
+	}
+	else if (*node)
+	{
+		cmd = (t_cmd *)((*node)->content);
+		while (*token && !is_op(((t_token *)(*token)->content)->type))
+		{
+			add_str_to_strs(&cmd->arg, ((t_token *)(*token)->content)->content);
+			*token = (*token)->next;
+		}
+	}
+}
+
+// do redir need a file after?
 t_redirect	*create_redir(t_list **token)
 {
 	t_redirect	*redir;
@@ -32,28 +77,39 @@ t_redirect	*create_redir(t_list **token)
 	return (redir);
 }
 
-t_ast	*handle_redirect(t_ast *node, t_list **token, int is_first_call)
+// if (!redir_node->right)
+// 	return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
+t_ast	*handle_redirect(t_ast *node, t_list **token, int call, t_ast *tmp)
 {
 	t_ast	*redir_node;
 
-	if (!node)
-		return ((t_ast *)errormsg_exitcode("syntax", 258, NULL));
 	redir_node = malloc(sizeof(t_ast));
 	if (!redir_node)
 		return (NULL);
 	ft_memset(redir_node, 0, sizeof(t_ast));
 	redir_node->type = ((t_token *)(*token)->content)->type;
 	redir_node->content = create_redir(token);
-	if (is_first_call && node && node->type == CMD)
+	if (call && node && node->type == CMD)
+	{
 		redir_node->left = node;
-	if (!redir_node->content)
+		tmp = redir_node->left;
+	}
+	if (!redir_node->content || (node && node->type == ARG))
 	{
 		free (redir_node);
 		return (NULL);
 	}
+	if (*token && !is_op(((t_token *)(*token)->content)->type))
+	{
+		if (tmp)
+			append_cmd_args(&tmp, token);
+		else
+		{
+			append_cmd_args(&redir_node->left, token);
+			tmp = redir_node->left;
+		}
+	}
 	if (*token && is_redirect(((t_token *)(*token)->content)->type))
-		redir_node->right = handle_redirect(node, token, 0);
-	// if (!redir_node->right)
-	// 	return ((t_ast *)errormsg_exitcode("sytax", 258, NULL));
+		redir_node->right = handle_redirect(node, token, 0, tmp);
 	return (redir_node);
 }

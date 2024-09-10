@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/09 09:27:35 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 12:35:29 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ void	exec_env(t_cmd *cmd, int in_fd, int out_fd, t_sh *sh)
 	(void)in_fd;
 	(void)out_fd;
 	i = -1;
+	if (cmd->arg)
+	{
+		printf("minishell: cd: too many arguments\n");
+		exit(EXIT_FAILURE);
+	}
 	while (sh->env[++i])
 		ft_putendl_fd(sh->env[i], STDOUT_FILENO);
-	// exit(EXIT_SUCCESS);
 }
 
 void	exec_exit(t_cmd *cmd)

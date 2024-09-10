@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:28:34 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/29 08:55:17 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 15:28:38 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_ast	*parser(t_list **tokens)
 	node = NULL;
 	while (tokens && *tokens)
 	{
+		// printf("parser token type: %d\n", ((t_token *)((*tokens)->content))->type);
 		if (((t_token *)((*tokens)->content))->type == CMD)
 		{
 			if (!node)
@@ -36,7 +37,7 @@ t_ast	*parser(t_list **tokens)
 		}
 		else if (is_redirect(((t_token *)((*tokens)->content))->type))
 		{
-			node = handle_redirect(node, tokens, 1);
+			node = handle_redirect(node, tokens, 1, NULL);
 			if (!node)
 				return (NULL);
 		}

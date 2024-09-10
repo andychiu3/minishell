@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 11:50:42 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 11:38:07 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	update_env(char *arg, t_sh *sh)
 	if (!sh || !arg)
 		return ;
 	tmp = malloc(sizeof(char *) * (ft_strs_count(sh->env) + 2));
+	if (!tmp)
+		return ;
 	i = -1;
 	while (sh->env[++i])
 		tmp[i] = ft_strdup(sh->env[i]);

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:18:17 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/09 10:20:36 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 18:39:25 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,53 +30,55 @@ void	exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 	else if (pid > 0)
 	{
 		close(pipe_fd[1]);
+		waitpid(pid, NULL, 0);
 		exec_ast(root->right, pipe_fd[0], out_fd, sh);
 		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
 		printf("exec_pipe: hi\n");
 	}
 }
 
 // 0644 means rw-r--r--
-void	process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh)
-{
-	t_redirect		*redir;
-	int				fd;
+// void	process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh)
+// {
+// 	t_redirect		*redir;
+// 	int				fd;
 
-	fd = -1;
-	if (root->type == INPUT)
-	{
-		redir = (t_redirect *)(root->content);
-		fd = open(redir->file, O_RDONLY);
-		if (fd == -1)
-			return ;
-		in_fd = fd;
-	}
-	else if (root->type == TRUNC)
-	{
-		redir = (t_redirect *)(root->content);
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd == -1)
-			return ;
-		if (out_fd != STDOUT_FILENO)
-			close(out_fd);
-		out_fd = fd;
-	}
-	else if (root->type == APPEND)
-	{
-		redir = (t_redirect *)(root->content);
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
-			return ;
-		if (out_fd != STDOUT_FILENO)
-			close(out_fd);
-		out_fd = fd;
-	}
-	if (root->left && root->left->type == CMD)
-		process_cmd(root->left, in_fd, out_fd, sh);
-	if (fd != -1)
-		close (fd);
-}
+// 	fd = -1;
+// 	if (root->type == INPUT)
+// 	{
+// 		redir = (t_redirect *)(root->content);
+// 		fd = open(redir->file, O_RDONLY);
+// 		if (fd == -1)
+// 			return ;
+// 		in_fd = fd;
+// 	}
+// 	else if (root->type == TRUNC)
+// 	{
+// 		redir = (t_redirect *)(root->content);
+// 		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 		if (fd == -1)
+// 			return ;
+// 		if (out_fd != STDOUT_FILENO)
+// 			close(out_fd);
+// 		out_fd = fd;
+// 	}
+// 	else if (root->type == APPEND)
+// 	{
+// 		redir = (t_redirect *)(root->content);
+// 		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 		if (fd == -1)
+// 			return ;
+// 		if (out_fd != STDOUT_FILENO)
+// 			close(out_fd);
+// 		out_fd = fd;
+// 	}
+// 	if (root->right && is_redirect(root->right->type))
+// 		process_redir(root->right, in_fd, out_fd, sh);
+// 	if (root->left && root->left->type == CMD)
+// 		process_cmd(root->left, in_fd, out_fd, sh);
+// 	if (fd != -1)
+// 		close (fd);
+// }
 
 //	if (WIFEXITED(status))
 //		printf("Child exited normally with status %d\n", WEXITSTATUS(status));
@@ -127,7 +129,7 @@ void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 	if (root->type == PIPE)
 		exec_pipe(root, in_fd, out_fd, sh);
 	else if (is_redirect(root->type))
-		process_redir(root, in_fd, out_fd, sh);
+		process_redir(root, &in_fd, &out_fd, sh);
 	else if (root->type == CMD)
 		process_cmd(root, in_fd, out_fd, sh);
 }

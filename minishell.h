@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/09 10:41:06 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 18:41:48 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_ast		*handle_pipe(t_ast *node, t_list **token);
 t_ast		*create_pipe_node(t_list **tokens);
 
 // node redir 2
-t_ast		*handle_redirect(t_ast *node, t_list **token, int is_first_call);
+t_ast		*handle_redirect(t_ast *node, t_list **token, int call, t_ast *tmp);
 t_redirect	*create_redir(t_list **token);
 
 // visualize 4
@@ -146,8 +146,14 @@ void		prnt_strs(char **strs);
 // exec 4
 void		exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh);
-void		process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh);
+// void		process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		process_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
+
+// exec_redir 4
+void		process_redir(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
+void		exec_input(t_redirect *redir, int *in_fd);
+void		exec_trunc(t_redirect *redir, int *out_fd);
+void		exec_append(t_redirect *redir, int *out_fd);
 
 // exec cmd 5
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
