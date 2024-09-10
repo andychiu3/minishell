@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/10 12:35:29 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/10 21:41:05 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,12 @@ void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 		exec_exit(cmd);
 	else if (is_executable(cmd->cmd, sh))
 		exec_with_execve(cmd, sh);
+	// else
+	// {
+	// 	printf("hi\n");
+	// 	errormsg_exitcode("nocmd", 1, cmd->cmd);
+	// 	exit (1);
+	// }
 }
 
 // else if (strcmp(cmd->cmd, "ls") == 0

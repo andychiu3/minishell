@@ -6,7 +6,7 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/10 18:40:36 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/11 08:45:53 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,28 @@ SRC			= \
 			var.c splits_by_var.c \
 
 OBJ			= $(SRC:.c=.o)
+
+# LEXER_SRC	= lexer token var splits_by_var
+# PARSER_SRC	= parse node_pipe node_cmd node_redir
+# BUILIN_SRC	= exec_export exec_unset exec_cd
+# CMD_SRC		= executable_cmd exec_others exec_cmd
+# REDIR_SRC	= exec_redir
+# DEBUG_SRC	= visualize
+# ENV_SRC		= env
+# SIG_SRC		= signal
+# UTILS_SRC	= free_address
+
+# SRC_FILES	= \
+# 			$(addprefix src/, $(SRC)) \
+# 			$(addprefix srcs/lexer/, $(LEXER_SRC)) \
+# 			$(addprefix srcs/parser/, $(PARSER_SRC)) \
+# 			$(addprefix srcs/buildin/, $(BUILIN_SRC)) \
+# 			$(addprefix srcs/cmd/, $(CMD_SRC)) \
+# 			$(addprefix srcs/redir/, $(REDIR_SRC)) \
+# 			$(addprefix srcs/debug/, $(DEBUG_SRC)) \
+# 			$(addprefix srcs/env/, $(ENV_SRC)) \
+# 			$(addprefix srcs/sig/, $(SIG_SRC)) \
+# 			$(addprefix srcs/utils/, $(UTILS_SRC)) \
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Ilibft -fsanitize=address

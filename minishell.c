@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/10 12:57:00 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 08:31:42 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ char	*errormsg_exitcode(char *why, int exit_code, char *str)
 	}
 	else if (ft_strcmp(why, "id") == 0)
 		printf("minishell: export: '%s': not a valid identifier\n", str);
-	else if (ft_strcmp(why, "exit") == 0)
-	{
-		printf("minishell: %s: %s: numeric argument required\n", str, why);
-	}
 	g_last_exit_code = exit_code;
 	return (NULL);
 }
@@ -57,10 +53,10 @@ void	scanning(t_sh *sh, char *line)
 	}
 	token = NULL;
 	lexer(line, &token, sh);
-	prnt_token(token);
+	// prnt_token(token);
 	root = NULL;
 	root = parser(&token);
-	prnt_ast(root, 0);
+	// prnt_ast(root, 0);
 	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
 	ft_out(token, root);
 }
@@ -84,7 +80,7 @@ void	minishell(t_sh *sh)
 			exit(0);
 		}
 		signal(SIGQUIT, sig_quit);
-		if (*line)
+		if (line && *line)
 			add_history(line);
 		if (strcmp(line, "exit") == 0)
 			exit(EXIT_SUCCESS);
