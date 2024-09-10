@@ -6,48 +6,39 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/11 08:45:53 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/11 08:59:52 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
-SRC			= \
-			minishell.c free_address.c \
-			signal.c \
-			env.c \
-			token.c lexer.c parse.c visualize.c \
-			node_pipe.c node_cmd.c node_redir.c \
-			exec.c exec_redir.c \
-			exec_cmd.c exec_export.c exec_unset.c exec_cd.c exec_others.c executable_cmd.c \
-			var.c splits_by_var.c \
+SRC			= minishell.c exec.c
+LEXER_SRC	= lexer.c token.c var.c splits_by_var.c
+PARSER_SRC	= parse.c node_pipe.c node_cmd.c node_redir.c
+BUILIN_SRC	= exec_export.c exec_unset.c exec_cd.c
+CMD_SRC		= executable_cmd.c exec_others.c exec_cmd.c
+REDIR_SRC	= exec_redir.c
+DEBUG_SRC	= visualize.c
+ENV_SRC		= env.c
+SIG_SRC		= signal.c
+UTILS_SRC	= free_address.c
 
-OBJ			= $(SRC:.c=.o)
+SRC_FILES	= \
+			$(addprefix srcs/, $(SRC)) \
+			$(addprefix srcs/lexer/, $(LEXER_SRC)) \
+			$(addprefix srcs/parser/, $(PARSER_SRC)) \
+			$(addprefix srcs/buildin/, $(BUILIN_SRC)) \
+			$(addprefix srcs/cmd/, $(CMD_SRC)) \
+			$(addprefix srcs/redir/, $(REDIR_SRC)) \
+			$(addprefix srcs/debug/, $(DEBUG_SRC)) \
+			$(addprefix srcs/env/, $(ENV_SRC)) \
+			$(addprefix srcs/sig/, $(SIG_SRC)) \
+			$(addprefix srcs/utils/, $(UTILS_SRC)) \
 
-# LEXER_SRC	= lexer token var splits_by_var
-# PARSER_SRC	= parse node_pipe node_cmd node_redir
-# BUILIN_SRC	= exec_export exec_unset exec_cd
-# CMD_SRC		= executable_cmd exec_others exec_cmd
-# REDIR_SRC	= exec_redir
-# DEBUG_SRC	= visualize
-# ENV_SRC		= env
-# SIG_SRC		= signal
-# UTILS_SRC	= free_address
-
-# SRC_FILES	= \
-# 			$(addprefix src/, $(SRC)) \
-# 			$(addprefix srcs/lexer/, $(LEXER_SRC)) \
-# 			$(addprefix srcs/parser/, $(PARSER_SRC)) \
-# 			$(addprefix srcs/buildin/, $(BUILIN_SRC)) \
-# 			$(addprefix srcs/cmd/, $(CMD_SRC)) \
-# 			$(addprefix srcs/redir/, $(REDIR_SRC)) \
-# 			$(addprefix srcs/debug/, $(DEBUG_SRC)) \
-# 			$(addprefix srcs/env/, $(ENV_SRC)) \
-# 			$(addprefix srcs/sig/, $(SIG_SRC)) \
-# 			$(addprefix srcs/utils/, $(UTILS_SRC)) \
+OBJ			= $(SRC_FILES:.c=.o)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibft -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes -fsanitize=address
 # RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 # RL			= -L/usr/local/opt/readline/lib -lreadline -lhistory
 RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
