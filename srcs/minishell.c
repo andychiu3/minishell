@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 08:31:42 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 13:26:20 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	minishell(t_sh *sh)
 		signal(SIGQUIT, sig_quit);
 		if (line && *line)
 			add_history(line);
-		if (strcmp(line, "exit") == 0)
-			exit(EXIT_SUCCESS);
+		// if (ft_strcmp(line, "exit") == 0)
+		// 	exit(EXIT_SUCCESS);
 		scanning(sh, line);
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:11:28 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 11:03:46 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 11:25:26 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	split_count(char *str)
 	return (count);
 }
 
+// can only be used when if (str) cuz too many lines
 char	**split_by_var(char *str)
 {
 	int		i;
@@ -70,8 +71,6 @@ char	**split_by_var(char *str)
 	int		start;
 	int		y;
 
-	if (!str)
-		return (NULL);
 	splits = malloc((split_count(str) + 1) * sizeof(char *));
 	if (!splits)
 		return (NULL);

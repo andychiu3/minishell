@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cd.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 11:29:18 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/31 14:08:40 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 13:46:00 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	updateoldpwd_chdir(char *target_path, t_sh *sh)
 	path = ft_strjoin("OLDPWD=", get_env_value(sh, "PWD"));
 	exec_export(path, sh);
 	free(path);
-	// printf("target path: %s\n", target_path);
 	chdir(target_path);
 	path = ft_strjoin("PWD=", getcwd(NULL, 0));
 	exec_export(path, sh);
@@ -81,7 +80,6 @@ void	process_cd(t_cmd *cmd, t_sh *sh)
 	if (valid_arg_amount(cmd))
 	{
 		path = wd_cases(cmd, sh);
-		// printf("path: %s\n", path);
 		if (path && access(path, F_OK | X_OK) == 0)
 			updateoldpwd_chdir(path, sh);
 		else if (access(*cmd->arg, F_OK | X_OK) == 0)

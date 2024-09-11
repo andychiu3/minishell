@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:28:34 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/10 15:28:38 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 13:53:10 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_ast	*parser(t_list **tokens)
 	node = NULL;
 	while (tokens && *tokens)
 	{
-		// printf("parser token type: %d\n", ((t_token *)((*tokens)->content))->type);
 		if (((t_token *)((*tokens)->content))->type == CMD)
 		{
 			if (!node)

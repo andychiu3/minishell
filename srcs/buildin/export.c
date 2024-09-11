@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_export.c                                      :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/10 11:38:07 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 13:47:50 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,31 @@ int	is_valid_identifier(char *str)
 	return (str[i] == '=');
 }
 
-void	update_env(char *arg, t_sh *sh)
-{
-	int		i;
-	char	**tmp;
+// void	update_env(char *arg, t_sh *sh)
+// {
+// 	int		i;
+// 	char	**tmp;
 
-	if (!sh || !arg)
-		return ;
-	tmp = malloc(sizeof(char *) * (ft_strs_count(sh->env) + 2));
-	if (!tmp)
-		return ;
-	i = -1;
-	while (sh->env[++i])
-		tmp[i] = ft_strdup(sh->env[i]);
-	tmp[i++] = ft_strdup(arg);
-	tmp[i] = NULL;
-	ft_freematrix(sh->env);
-	sh->env = tmp;
-}
+// 	if (!sh || !arg)
+// 		return ;
+// 	tmp = malloc(sizeof(char *) * (ft_strs_count(sh->env) + 2));
+// 	if (!tmp)
+// 		return ;
+// 	i = -1;
+// 	while (sh->env[++i])
+// 		tmp[i] = ft_strdup(sh->env[i]);
+// 	// printf("update_env: arg: %s\n", arg);
+// 	tmp[i++] = ft_strdup(arg);
+// 	tmp[i] = NULL;
+// 	ft_freematrix(sh->env);
+// 	sh->env = tmp;
+// }
 
+// only be used if arg n sh valid cuz too many lines
 void	exec_export(char *arg, t_sh *sh)
 {
 	int		i;
 
-	if (!sh || !arg)
-		return ;
 	i = -1;
 	if (is_valid_identifier(arg) == 1)
 	{
@@ -98,7 +98,7 @@ void	exec_export(char *arg, t_sh *sh)
 				return ;
 		}
 		if (!sh->env[i])
-			update_env(arg, sh);
+			add_str_to_strs(&(sh->env), arg);
 	}
 	else if (is_valid_identifier(arg) == -1)
 	{

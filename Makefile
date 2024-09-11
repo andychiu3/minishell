@@ -6,18 +6,18 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/11 08:59:52 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/11 13:44:45 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
 SRC			= minishell.c exec.c
-LEXER_SRC	= lexer.c token.c var.c splits_by_var.c
+LEXER_SRC	= lexer.c quote_utils.c token.c var.c splits_by_var.c
 PARSER_SRC	= parse.c node_pipe.c node_cmd.c node_redir.c
-BUILIN_SRC	= exec_export.c exec_unset.c exec_cd.c
-CMD_SRC		= executable_cmd.c exec_others.c exec_cmd.c
-REDIR_SRC	= exec_redir.c
+BUILIN_SRC	= builtin.c export.c unset.c cd.c pwd.c exit.c echo.c exec_env.c
+CMD_SRC		= exec_cmd.c execve_.c executable_cmd.c
+REDIR_SRC	= exec_redir.c pipe.c
 DEBUG_SRC	= visualize.c
 ENV_SRC		= env.c
 SIG_SRC		= signal.c

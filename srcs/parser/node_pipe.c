@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 09:48:03 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/10 13:49:46 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 13:46:22 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,11 @@ t_ast	*handle_pipe(t_ast *node, t_list **token)
 	if (!node)
 		return ((t_ast *)errormsg_exitcode("syntax", 258,
 				(char *)((t_token *)((*token)->content))->content));
-	printf("handle_pipe: hi\n");
 	op_node = create_pipe_node(token);
 	op_node->left = node;
 	if (token && *token && !is_redirect(((t_token *)((*token)->content))->type))
 		op_node->right = parser(token);
 	if (!op_node->right)
-	{
-		// printf("handle_pipe: hi\n");
 		return ((t_ast *)errormsg_exitcode("syntax", 258, "|"));
-	}
 	return (op_node);
 }
