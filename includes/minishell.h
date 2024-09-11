@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 14:41:11 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 23:55:42 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,10 @@ void		exec_append(t_redirect *redir, int *out_fd);
 // pipe 1
 void		exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 
-// exec cmd 4
+// exec cmd 5
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
-void		before_cmd(int *in_fd, int *out_fd);
+void		redir_n_backup_std_io(int *in_fd, int *out_fd, int *saved_fd);
+void		restore_std_io(int in_fd, int out_fd, int saved_fd);
 void		fork_for_execve(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
 void		wait_for_child(int *in_fd, int *out_fd, pid_t pid);
 
