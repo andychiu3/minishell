@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 13:26:20 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 16:40:30 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ char	*errormsg_exitcode(char *why, int exit_code, char *str)
 		printf("minishell: export: '%s': not a valid identifier\n", str);
 	g_last_exit_code = exit_code;
 	return (NULL);
+}
+
+void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)
+{
+	if (!root)
+		return ;
+	if (root->type == PIPE)
+		exec_pipe(root, in_fd, out_fd, sh);
+	else if (is_redirect(root->type))
+		process_redir(root, &in_fd, &out_fd, sh);
+	else if (root->type == CMD)
+		exec_cmd(root, in_fd, out_fd, sh);
 }
 
 // prnt_token(token);

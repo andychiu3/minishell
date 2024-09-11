@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 13:44:17 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 16:36:26 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,24 @@ void	fork_for_execve(t_ast *root, int *in_fd, int *out_fd, t_sh *sh)
 void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 {
 	t_cmd	*cmd;
+	int		saved_stdout;
 
 	if (!root)
 		return ;
 	cmd = (t_cmd *)root->content;
+	saved_stdout = dup(STDOUT_FILENO);
 	if (is_builtin(cmd->cmd))
 	{
 		before_cmd(&in_fd, &out_fd);
-		builtin(cmd, in_fd, out_fd, sh);
+		builtin(cmd, in_fd, STDOUT_FILENO, sh);
 	}
 	else if (is_executable(cmd->cmd, sh))
 		fork_for_execve(root, &in_fd, &out_fd, sh);
 	else
-	{
-		printf("exec_cmd: hi\n");
 		errormsg_exitcode("nocmd", 1, cmd->cmd);
-		exit(EXIT_FAILURE);
+	if (out_fd != STDOUT_FILENO)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
 	}
 }

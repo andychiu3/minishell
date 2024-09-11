@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 13:48:12 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/11 14:41:11 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,9 @@ void		prnt_ast(t_ast *node, int level);
 void		node_prnter(t_ast *node);
 void		prnt_strs(char **strs);
 
-// exec 4
+// exec 1
 void		exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 // void		process_redir(t_ast *root, int in_fd, int out_fd, t_sh *sh);
-void		fork_for_execve(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
 
 // exec_redir 4
 void		process_redir(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
@@ -170,8 +169,15 @@ void		exec_append(t_redirect *redir, int *out_fd);
 // pipe 1
 void		exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 
-// exec cmd 1
+// exec cmd 4
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
+void		before_cmd(int *in_fd, int *out_fd);
+void		fork_for_execve(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
+void		wait_for_child(int *in_fd, int *out_fd, pid_t pid);
+
+// execve 2
+void		exec_with_execve(t_cmd *cmd, t_sh *sh);
+char		**combine_cmd_arg_with_path(t_cmd *cmd, char *path);
 
 // builtin 6
 int			is_builtin(char *cmd);
@@ -199,10 +205,6 @@ int			valid_arg_amount(t_cmd *cmd);
 char		*wd_cases(t_cmd *cmd, t_sh *sh);
 char		*expand_path(t_cmd *cmd, t_sh *sh);
 void		updateoldpwd_chdir(char *target_path, t_sh *sh);
-
-// execve 2
-void		exec_with_execve(t_cmd *cmd, t_sh *sh);
-char		**combine_cmd_arg_with_path(t_cmd *cmd, char *path);
 
 // error 1
 char		*errormsg_exitcode(char *why, int exit_code, char *str);
