@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 23:55:42 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 19:15:00 by achiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,11 @@ void		exec_append(t_redirect *redir, int *out_fd);
 // pipe 1
 void		exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 
+// heredoc 3
+void		fork_for_heredoc(t_redirect *redir, int *in_fd, t_sh *sh);
+void		heredoc(t_redirect *redir, int pipe_o, t_sh *sh);
+void		free_n_exit(char *input, int exit_code);
+
 // exec cmd 5
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		redir_n_backup_std_io(int *in_fd, int *out_fd, int *saved_fd);
@@ -210,6 +215,6 @@ void		updateoldpwd_chdir(char *target_path, t_sh *sh);
 // error 1
 char		*errormsg_exitcode(char *why, int exit_code, char *str);
 
-void		add_str_to_strs(char ***strs, char *str);
+// void		add_str_to_strs(char ***strs, char *str);
 
 #endif

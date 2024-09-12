@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
+#    By: achiu <achiu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/12 10:31:38 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/12 19:15:44 by achiu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LEXER_SRC	= lexer.c quote_utils.c token.c var.c splits_by_var.c
 PARSER_SRC	= parse.c node_pipe.c node_cmd.c node_redir.c
 BUILIN_SRC	= builtin.c export.c unset.c cd.c pwd.c exit.c echo.c exec_env.c
 CMD_SRC		= exec_cmd.c execve_.c executable_cmd.c
-REDIR_SRC	= exec_redir.c pipe.c
+REDIR_SRC	= exec_redir.c pipe.c heredoc.c
 DEBUG_SRC	= visualize.c
 ENV_SRC		= env.c
 SIG_SRC		= signal.c
@@ -38,10 +38,11 @@ SRC_FILES	= \
 OBJ			= $(SRC_FILES:.c=.o)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes -fsanitize=address
-RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
+CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes -I/Users/achiu/local/include
+# RL2			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 # RL			= -L/usr/local/opt/readline/lib -lreadline -lhistory
 # RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
+RL1			= -L/Users/achiu/local/lib -I/Users/achiu/local/include -lreadline -lhistory -lncurses
 # -fsanitize=address
 
 LIBFT		= libft/libft.a
@@ -52,7 +53,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ) $(LIBFT)
 # $(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT) -lreadline
 			# $(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL_M2chip)
-			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL)
+			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL1)
 			
 			
 $(LIBFT):
@@ -60,11 +61,11 @@ $(LIBFT):
 
 clean:
 			rm -rf $(OBJ)
-			# $(LIBFT_MAKE) clean
+			$(LIBFT_MAKE) clean
 
 fclean: 	clean
 			rm -rf $(NAME)
-			# rm -rf $(LIBFT)
+			rm -rf $(LIBFT)
 
 re:			fclean all
 

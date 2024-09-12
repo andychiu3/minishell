@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 09:48:33 by achiu             #+#    #+#             */
-/*   Updated: 2024/08/29 21:44:58 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 19:13:35 by achiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ void	ft_freematrix(char **matrix);
 int		ft_strs_count(char **strs);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnbr(char *str);
+void	ft_strjoin_with_sep(char **total, char *add, char *sep);
+void	add_str_to_strs(char ***strs, char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:28:34 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 13:53:10 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 19:08:37 by achiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	is_redirect(int type)
 {
-	return (type >= INPUT && type <= APPEND);
+	return (type >= INPUT && type <= HEREDOC);
 }
 
 int	is_op(int type)
 {
-	return (type >= PIPE && type <= APPEND);
+	return (type >= PIPE && type <= HEREDOC);
 }
 
 t_ast	*parser(t_list **tokens)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
+#    By: achiu <achiu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 11:46:34 by achiu             #+#    #+#              #
-#    Updated: 2024/08/29 21:44:41 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/12 19:14:09 by achiu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRC			=  \
 			ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 			ft_printf.c ft_nbr.c ft_char.c ft_hex.c \
 			get_next_line.c \
-			ft_freematrix.c ft_strs_count.c \
-			ft_strcmp.c ft_isnbr.c\
+			ft_freematrix.c ft_strs_count.c ft_strjoin_with_sep.c add_str_to_strs.c \
+			ft_strcmp.c ft_isnbr.c \
 				
 OBJ			= ${SRC:.c=.o}
 

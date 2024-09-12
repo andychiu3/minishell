@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 10:30:35 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 18:46:12 by achiu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	minishell(t_sh *sh)
 		scanning(sh, line);
 		free(line);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)
