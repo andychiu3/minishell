@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/11 23:59:00 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 10:30:35 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	minishell(t_sh *sh)
 		line = readline(PROMPT);
 		if (!line)
 		{
-			// exec_exit(NULL);
 			// printf("\033[1A\033[0K");
 			// printf(PROMPT);
 			// printf("\n");
@@ -94,8 +93,6 @@ void	minishell(t_sh *sh)
 		signal(SIGQUIT, sig_quit);
 		if (line && *line)
 			add_history(line);
-		// if (ft_strcmp(line, "exit") == 0)
-		// 	exit(EXIT_SUCCESS);
 		scanning(sh, line);
 		free(line);
 	}

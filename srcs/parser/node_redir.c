@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 19:56:24 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/10 15:48:25 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/12 07:59:15 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ void	append_cmd_args(t_ast **node, t_list **token)
 	if (!*node)
 	{
 		*node = create_cmd_node(token);
-		// if (node)
-		// {
-		// 	cmd = (t_cmd *)(node->content);
-		// 	printf("cmd: %s\n", cmd->cmd);
-		// 	prnt_strs(cmd->arg);
-		// }
 	}
 	else if (*node)
 	{
