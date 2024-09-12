@@ -39,9 +39,9 @@ OBJ			= $(SRC_FILES:.c=.o)
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes -fsanitize=address
-# RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
+RL			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 # RL			= -L/usr/local/opt/readline/lib -lreadline -lhistory
-RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
+# RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
 # -fsanitize=address
 
 LIBFT		= libft/libft.a
@@ -51,8 +51,8 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ) $(LIBFT)
 # $(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT) -lreadline
-			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL_M2chip)
-			# $(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL)
+			# $(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL_M2chip)
+			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL)
 			
 			
 $(LIBFT):
