@@ -6,27 +6,11 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 19:06:07 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/08 17:41:44 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/13 14:15:42 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	is_cmd(char *str, t_sh *sh)
-// {
-// 	return (ft_strncmp(str, "echo", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "cd", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "pwd", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "export", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "unset", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "env", sizeof(str)) == 0
-// 		|| ft_strncmp(str, "exit", sizeof(str)) == 0
-// 		|| ft_strcmp(str, "ls") == 0
-// 		|| ft_strcmp(str, "clear") == 0
-// 		|| ft_strcmp(str, "grep") == 0
-// 		|| ft_strcmp(str, "cat") == 0
-// 		|| is_executable(str, sh));
-// }
 
 int	is_cmd(char **str, t_sh *sh)
 {

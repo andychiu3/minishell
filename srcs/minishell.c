@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 18:46:12 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/13 15:20:03 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,8 @@ void	scanning(t_sh *sh, char *line)
 	t_list	*token;
 	t_ast	*root;
 
-	if (!line)
+	if (!line || !quote_valid(line))
 		return ;
-	if (!quote_case(line))
-	{
-		printf("unclosed quotes\n");
-		return ;
-	}
 	token = NULL;
 	lexer(line, &token, sh);
 	// prnt_token(token);

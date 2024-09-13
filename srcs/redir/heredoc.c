@@ -3,47 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:47:43 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 19:06:05 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/13 17:08:15 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	ft_strjoin_with_sep(char **total, char *add, char *sep)
-// {
-// 	char	*tmp;
-
-// 	if (add && *add)
-// 	{
-// 		if (!*total)
-// 			*total = ft_strdup("add");
-// 		else
-// 		{
-// 			tmp = ft_strjoin(*total, sep);
-// 			free(*total);
-// 			*total = ft_strjoin(tmp, add);
-// 			free(tmp);
-// 		}
-// 	}
-// }
+// -1: EOF errormsg print
+// 0: consider var_situation
+// 1: do nothing
+int	in_delimiter(t_redirect *redir, char **delimiter)
+{
+	if (ft_strchr(redir->file, '\'') || ft_strchr(redir->file, '\"'))
+	{
+		if (!quote_valid(redir->file))
+			return (-1);
+		else
+		{
+			*delimiter = remove_quote(redir->file);
+			return (1);
+		}
+	}
+	*delimiter = redir->file;
+	return (0);
+}
 
 // no freeing for add but original total
-void	strjoin_after_nextline(char **total, char *add)
+void	add_str_with_nextline(char **total, char *add)
 {
 	char	*tmp;
 
 	if (add && *add)
 	{
 		if (!*total)
-			*total = ft_strdup("add");
+			*total = ft_strjoin(add, "\n");
 		else
 		{
-			tmp = ft_strjoin(*total, "\n");
+			tmp = ft_strjoin(*total, add);
 			free(*total);
-			*total = ft_strjoin(tmp, add);
+			*total = ft_strjoin(tmp, "\n");
 			free(tmp);
 		}
 	}
@@ -56,33 +57,80 @@ void	free_n_exit(char *input, int exit_code)
 	exit(exit_code);
 }
 
-// var situation??
-void	heredoc(t_redirect *redir, int pipe_o, t_sh *sh)
+void	heredoc_input(char *dlmtr, t_sh *sh, int in_deli, char **input)
 {
-	char		*line;
-	char		*input;
+	char	*line;
+	char	*tmp;
 
-	if (!redir)
-		return ;
-	input = NULL;
-	(void)sh;
+	tmp = NULL;
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
-			free_n_exit(input, EXIT_FAILURE);
-		if (ft_strcmp(line, redir->file) == 0)
+			free_n_exit(*input, EXIT_FAILURE);
+		if (ft_strcmp(line, dlmtr) == 0)
 		{
 			free(line);
-			break ;
+			return ;
 		}
-		ft_strjoin_with_sep(&input, line, "\n");
+		if (in_deli == 0)
+		{
+			tmp = line;
+			line = var_situation(tmp, sh);
+		}
+		add_str_with_nextline(input, line);
 		free(line);
+		if (tmp)
+			free(tmp);
 	}
+}
+
+// var situation??
+void	setup_heredoc(t_redirect *redir, int pipe_o, t_sh *sh)
+{
+	char	*input;
+	char	*delimeter;
+	int		in_deli;
+
+	if (!redir)
+		return ;
+	input = NULL;
+	delimeter = NULL;
+	in_deli = in_delimiter(redir, &delimeter);
+	if (in_deli == -1)
+		exit(EXIT_FAILURE);
+	heredoc_input(redir->file, sh, in_deli, &input);
 	ft_putstr_fd(input, pipe_o);
 	close(pipe_o);
 	free_n_exit(input, EXIT_SUCCESS);
 }
+
+// void	heredoc_(t_redirect *redir, int pipe_o, t_sh *sh)
+// {
+// 	char	*line;
+// 	char	*input;
+
+// 	if (!redir)
+// 		return ;
+// 	input = NULL;
+// 	(void)sh;
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (!line)
+// 			free_n_exit(input, EXIT_FAILURE);
+// 		if (ft_strcmp(line, redir->file) == 0)
+// 		{
+// 			free(line);
+// 			break ;
+// 		}
+// 		add_str_with_nextline(&input, line);
+// 		free(line);
+// 	}
+// 	ft_putstr_fd(input, pipe_o);
+// 	close(pipe_o);
+// 	free_n_exit(input, EXIT_SUCCESS);
+// }
 
 void	fork_for_heredoc(t_redirect *redir, int *in_fd, t_sh *sh)
 {
@@ -98,14 +146,15 @@ void	fork_for_heredoc(t_redirect *redir, int *in_fd, t_sh *sh)
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		heredoc(redir, pipe_fd[1], sh);
+		setup_heredoc(redir, pipe_fd[1], sh);
 	}
 	else if (pid > 0)
 	{
 		close(pipe_fd[1]);
 		waitpid(pid, NULL, 0);
-		dup2(pipe_fd[0], *in_fd);
-		close(pipe_fd[0]);
+		if (*in_fd != STDIN_FILENO)
+			close(*in_fd);
+		*in_fd = pipe_fd[0];
 	}
 	else
 		perror("fork failed");

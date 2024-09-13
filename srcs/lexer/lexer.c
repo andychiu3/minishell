@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:34:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 13:39:30 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/13 14:54:38 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,33 +160,27 @@ void	lexer(char *line, t_list **token_list, t_sh *sh)
 	while (i < (int)ft_strlen(line))
 	{
 		start = i;
-		// printf("char c: %c\n", line[i]);
 		quote = if_quote(line[i], quote);
 		if (quote == NONE && line[i] == ' ')
 		{
 			while (quote == NONE && line[i] == ' ')
 			{
-				// printf("skip space and i: %d\n", i);
 				i++;
 			}
 			continue ;
 		}
 		else if (quote == NONE && ft_strchr("|<>", line[i]))
 		{
-			// printf("op and i: %d\n", i);
 			array = extract_op(line, &start, &i);
 		}
 		else
 		{
-			// printf("words and i: %d\n", i);
 			array = extract(line, &i, sh, &quote);
 		}
 		if (array)
 		{
 			tokenize(array, token_list, sh);
-			// free(array);
 		}
-		// printf("\n");
 	}
 }
 

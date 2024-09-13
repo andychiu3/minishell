@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:24:26 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/12 19:05:16 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/13 11:13:46 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	process_redir(t_ast *root, int *in_fd, int *out_fd, t_sh *sh)
 		exec_trunc(redir, out_fd);
 	else if (root->type == APPEND)
 		exec_append(redir, out_fd);
-	else if (root->type == APPEND)
+	else if (root->type == HEREDOC)
 		fork_for_heredoc(redir, in_fd, sh);
 	if (root->right && is_redirect(root->right->type))
 		process_redir(root->right, in_fd, out_fd, sh);

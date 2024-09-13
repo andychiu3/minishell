@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:01:48 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 23:56:12 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/13 12:07:29 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 	saved_fd = -1;
 	if (is_builtin(cmd->cmd))
 	{
+		// printf("exec_cmd: in_fd: %d\n", in_fd);
 		redir_n_backup_std_io(&in_fd, &out_fd, &saved_fd);
 		builtin(cmd, in_fd, STDOUT_FILENO, sh);
 	}

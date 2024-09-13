@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 19:15:00 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/13 17:06:03 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char		*extract_op(char *str, int *start, int *i);
 
 // quote utils 3
 int			quote_case(char *line);
+int			quote_valid(char *line);
 int			if_quote(char c, int quote);
 char		*remove_quote(char *str);
 
@@ -169,10 +170,13 @@ void		exec_append(t_redirect *redir, int *out_fd);
 // pipe 1
 void		exec_pipe(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 
-// heredoc 3
+// heredoc 4
 void		fork_for_heredoc(t_redirect *redir, int *in_fd, t_sh *sh);
-void		heredoc(t_redirect *redir, int pipe_o, t_sh *sh);
+// void		heredoc(t_redirect *redir, int pipe_o, t_sh *sh);
 void		free_n_exit(char *input, int exit_code);
+void		add_str_with_nextline(char **total, char *add);
+void		setup_heredoc(t_redirect *redir, int pipe_o, t_sh *sh);
+void		heredoc_input(char *dlmtr, t_sh *sh, int in_deli, char **input);
 
 // exec cmd 5
 void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);

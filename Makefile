@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: achiu <achiu@student.42.fr>                +#+  +:+       +#+         #
+#    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/12 19:15:44 by achiu            ###   ########.fr        #
+#    Updated: 2024/09/13 11:29:04 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,20 @@ SRC_FILES	= \
 OBJ			= $(SRC_FILES:.c=.o)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes -I/Users/achiu/local/include
+CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes
+CPPFLAGS	= -I$(RL_M2)/include
+LDFLAGS		= -L$(RL_M2)/lib -lreadline
+# -fsanitize=address
+# -lhistory -lncurses
+
+# readline path may differ cuz install in different way in different system
+# RL_PATH		= /usr/local/opt/readline
+RL_M2		= /opt/homebrew/opt/readline
+# RL			= /Users/achiu/local/
+
 # RL2			= -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory -lncurses
 # RL			= -L/usr/local/opt/readline/lib -lreadline -lhistory
-# RL_M2chip	= -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline -lhistory
-RL1			= -L/Users/achiu/local/lib -I/Users/achiu/local/include -lreadline -lhistory -lncurses
-# -fsanitize=address
+# RL1			= -L/Users/achiu/local/lib -I/Users/achiu/local/include -lreadline -lhistory -lncurses
 
 LIBFT		= libft/libft.a
 LIBFT_MAKE	= make -C libft/
@@ -51,21 +59,19 @@ LIBFT_MAKE	= make -C libft/
 all:		$(NAME)
 
 $(NAME):	$(OBJ) $(LIBFT)
-# $(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT) -lreadline
-			# $(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL_M2chip)
-			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL1)
-			
+			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LDFLAGS)
+			# $(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(RL1)
 			
 $(LIBFT):
 			$(LIBFT_MAKE)
 
 clean:
 			rm -rf $(OBJ)
-			$(LIBFT_MAKE) clean
+			# $(LIBFT_MAKE) clean
 
 fclean: 	clean
 			rm -rf $(NAME)
-			rm -rf $(LIBFT)
+			# rm -rf $(LIBFT)
 
 re:			fclean all
 

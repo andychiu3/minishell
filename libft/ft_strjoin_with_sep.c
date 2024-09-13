@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_with_char.c                             :+:      :+:    :+:   */
+/*   ft_strjoin_with_sep.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:43:20 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 17:45:08 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/13 11:28:39 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_strjoin_with_sep(char **total, char *add, char *sep)
 	if (add && *add)
 	{
 		if (!*total)
-			*total = ft_strdup("add");
+			*total = ft_strdup(add);
 		else
 		{
 			tmp = ft_strjoin(*total, sep);

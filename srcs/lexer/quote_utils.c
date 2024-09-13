@@ -6,11 +6,26 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 13:39:11 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 13:39:39 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/13 15:21:03 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	quote_valid(char *line)
+{
+	if (quote_case(line) == 1)
+	{
+		errormsg_exitcode("EOF", 1, "\'");
+		return (0);
+	}
+	else if (quote_case(line) == 2)
+	{
+		errormsg_exitcode("EOF", 1, "\"");
+		return (0);
+	}
+	return (1);
+}
 
 // if quote valid
 // CONSIDER IF WE KEEP IT AFTER AST
@@ -32,7 +47,7 @@ int	quote_case(char *line)
 		else if (line[i] == '\"' && quote == DOUBLE)
 			quote = NONE;
 	}
-	return (quote == NONE);
+	return (quote);
 }
 
 // update char c quote situation
