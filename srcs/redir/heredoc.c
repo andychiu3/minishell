@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:47:43 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/13 17:08:15 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/15 10:44:05 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	in_delimiter(t_redirect *redir, char **delimiter)
 		else
 		{
 			*delimiter = remove_quote(redir->file);
+			printf("in_delimiter: redir->file: %s\n", redir->file);
 			return (1);
 		}
 	}
@@ -63,6 +64,7 @@ void	heredoc_input(char *dlmtr, t_sh *sh, int in_deli, char **input)
 	char	*tmp;
 
 	tmp = NULL;
+	printf("heredoc input: dlmtr: %s\n", dlmtr);
 	while (1)
 	{
 		line = readline("> ");
@@ -105,32 +107,32 @@ void	setup_heredoc(t_redirect *redir, int pipe_o, t_sh *sh)
 	free_n_exit(input, EXIT_SUCCESS);
 }
 
-// void	heredoc_(t_redirect *redir, int pipe_o, t_sh *sh)
-// {
-// 	char	*line;
-// 	char	*input;
+void	heredoc_(t_redirect *redir, int pipe_o, t_sh *sh)
+{
+	char	*line;
+	char	*input;
 
-// 	if (!redir)
-// 		return ;
-// 	input = NULL;
-// 	(void)sh;
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!line)
-// 			free_n_exit(input, EXIT_FAILURE);
-// 		if (ft_strcmp(line, redir->file) == 0)
-// 		{
-// 			free(line);
-// 			break ;
-// 		}
-// 		add_str_with_nextline(&input, line);
-// 		free(line);
-// 	}
-// 	ft_putstr_fd(input, pipe_o);
-// 	close(pipe_o);
-// 	free_n_exit(input, EXIT_SUCCESS);
-// }
+	if (!redir)
+		return ;
+	input = NULL;
+	(void)sh;
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			free_n_exit(input, EXIT_FAILURE);
+		if (ft_strcmp(line, redir->file) == 0)
+		{
+			free(line);
+			break ;
+		}
+		add_str_with_nextline(&input, line);
+		free(line);
+	}
+	ft_putstr_fd(input, pipe_o);
+	close(pipe_o);
+	free_n_exit(input, EXIT_SUCCESS);
+}
 
 void	fork_for_heredoc(t_redirect *redir, int *in_fd, t_sh *sh)
 {

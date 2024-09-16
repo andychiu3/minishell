@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_unset.c                                       :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 08:41:53 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/05 11:50:11 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/15 09:28:25 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void	exec_unset(char *arg, t_sh *sh)
 			rm_env_var(arg, sh);
 	}
 	else
-	{
-		g_last_exit_code = 1;
-		printf("minishell: unset: '%s': not a valid identifier\n", arg);
-	}
+		errormsg_exitcode("unset", 1, arg);
 }
 
 void	process_unset(t_cmd *cmd, t_sh *sh)

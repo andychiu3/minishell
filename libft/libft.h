@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achiu <achiu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 09:48:33 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/12 19:13:35 by achiu            ###   ########.fr       */
+/*   Updated: 2024/09/16 08:15:13 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void*));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
 
 // printf
-int		ft_printf(const char *str, ...);
+int		err_printf(const char *str, ...);
 void	ft_conversion(va_list *args, char c, int *len);
 void	ft_print_count(char c, int *len);
 

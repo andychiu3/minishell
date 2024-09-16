@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:22:29 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/08/29 09:41:09 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 08:18:52 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,23 @@ void	node_prnter(t_ast *node)
 	if (!node)
 		return ;
 	if (node->type == PIPE)
-		ft_printf("%s", (char *)node->content);
+		err_printf("%s", (char *)node->content);
 	else if (node->type == CMD)
 	{
 		cmd = node->content;
-		ft_printf("%s", cmd->cmd);
+		err_printf("%s", cmd->cmd);
 		i = -1;
 		while (cmd->arg && cmd->arg[++i])
-			ft_printf(", %s", cmd->arg[i]);
+			err_printf(", %s", cmd->arg[i]);
 	}
 	else if (is_redirect(node->type))
 	{
-		ft_printf("%s", ((t_redirect *)(node->content))->redir);
+		err_printf("%s", ((t_redirect *)(node->content))->redir);
 		if (((t_redirect *)(node->content))->file)
-			ft_printf(", %s", ((t_redirect *)(node->content))->file);
+			err_printf(", %s", ((t_redirect *)(node->content))->file);
 	}
 	else
-		printf("??%d\n", ((t_token *)(node->content))->type);
+		err_printf("??%d\n", ((t_token *)(node->content))->type);
 }
 
 void	prnt_ast(t_ast *node, int level)
@@ -67,9 +67,9 @@ void	prnt_ast(t_ast *node, int level)
 		return ;
 	i = -1;
 	while (++i < level)
-		ft_printf("  ");
+		err_printf("  ");
 	node_prnter(node);
-	ft_printf("\n");
+	printf("\n");
 	prnt_ast(node->left, level + 1);
 	prnt_ast(node->right, level + 1);
 }

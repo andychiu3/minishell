@@ -6,7 +6,7 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/09/13 11:29:04 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/09/16 14:42:37 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ REDIR_SRC	= exec_redir.c pipe.c heredoc.c
 DEBUG_SRC	= visualize.c
 ENV_SRC		= env.c
 SIG_SRC		= signal.c
-UTILS_SRC	= free_address.c
+UTILS_SRC	= free_address.c errmsg.c
 
 SRC_FILES	= \
 			$(addprefix srcs/, $(SRC)) \

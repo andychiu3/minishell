@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:24:26 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/13 11:13:46 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/14 08:47:12 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,6 @@ void	process_redir(t_ast *root, int *in_fd, int *out_fd, t_sh *sh)
 		process_redir(root->right, in_fd, out_fd, sh);
 	if (root->left && root->left->type == CMD)
 		exec_cmd(root->left, *in_fd, *out_fd, sh);
+	else
+		close_unuse_fd(in_fd, out_fd);
 }

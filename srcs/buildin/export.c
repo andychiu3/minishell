@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/13 07:45:12 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/15 09:26:33 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,6 @@ int	is_valid_identifier(char *str)
 	return (str[i] == '=');
 }
 
-// void	update_env(char *arg, t_sh *sh)
-// {
-// 	int		i;
-// 	char	**tmp;
-
-// 	if (!sh || !arg)
-// 		return ;
-// 	tmp = malloc(sizeof(char *) * (ft_strs_count(sh->env) + 2));
-// 	if (!tmp)
-// 		return ;
-// 	i = -1;
-// 	while (sh->env[++i])
-// 		tmp[i] = ft_strdup(sh->env[i]);
-// 	// printf("update_env: arg: %s\n", arg);
-// 	tmp[i++] = ft_strdup(arg);
-// 	tmp[i] = NULL;
-// 	ft_freematrix(sh->env);
-// 	sh->env = tmp;
-// }
-
 // only be used if arg n sh valid cuz too many lines
 void	exec_export(char *arg, t_sh *sh)
 {
@@ -101,7 +81,7 @@ void	exec_export(char *arg, t_sh *sh)
 			add_str_to_strs(&(sh->env), arg);
 	}
 	else if (is_valid_identifier(arg) == -1)
-		errormsg_exitcode("id", 1, arg);
+		errormsg_exitcode("export", 1, arg);
 }
 
 void	process_export(t_cmd *cmd, t_sh *sh)

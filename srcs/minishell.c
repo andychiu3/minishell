@@ -6,36 +6,11 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/13 15:20:03 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/15 09:38:50 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*errormsg_exitcode(char *why, int exit_code, char *str)
-{
-	printf("why: %s\n", why);
-	if (ft_strcmp(why, "syntax") == 0)
-	{
-		printf("minishell: syntax error near unexpected token");
-		if (str)
-			printf(" `%s'\n", str);
-		else
-			printf("`newline'\n");
-	}
-	else if (ft_strcmp(why, "nocmd") == 0)
-		printf("minishell %s: command not found\n", str);
-	else if (ft_strcmp(why, "EOF") == 0)
-	{
-		printf("minishell: unexpected EOF while looking for matching `%s'\n",
-			str);
-		printf("minishell: syntax error: unexpected end of file\n");
-	}
-	else if (ft_strcmp(why, "id") == 0)
-		printf("minishell: export: '%s': not a valid identifier\n", str);
-	g_last_exit_code = exit_code;
-	return (NULL);
-}
 
 void	exec_ast(t_ast *root, int in_fd, int out_fd, t_sh *sh)
 {
@@ -63,7 +38,7 @@ void	scanning(t_sh *sh, char *line)
 	// prnt_token(token);
 	root = NULL;
 	root = parser(&token);
-	// prnt_ast(root, 0);
+	prnt_ast(root, 0);
 	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
 	ft_out(token, root);
 }
@@ -91,7 +66,7 @@ void	minishell(t_sh *sh)
 		scanning(sh, line);
 		free(line);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **env)

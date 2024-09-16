@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/13 17:06:03 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 14:41:00 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <term.h>
 # include <termios.h>
 # include <malloc/malloc.h>
+# include <sys/stat.h>
 
 # define PROMPT "\x1b[1;30mminishell $ \x1b[0m"
 
@@ -183,7 +184,7 @@ void		exec_cmd(t_ast *root, int in_fd, int out_fd, t_sh *sh);
 void		redir_n_backup_std_io(int *in_fd, int *out_fd, int *saved_fd);
 void		restore_std_io(int in_fd, int out_fd, int saved_fd);
 void		fork_for_execve(t_ast *root, int *in_fd, int *out_fd, t_sh *sh);
-void		wait_for_child(int *in_fd, int *out_fd, pid_t pid);
+void		close_unuse_fd(int *in_fd, int *out_fd);
 
 // execve 2
 void		exec_with_execve(t_cmd *cmd, t_sh *sh);
@@ -211,10 +212,11 @@ void		rm_env_var(char *arg, t_sh *sh);
 
 // cd 5
 void		process_cd(t_cmd *cmd, t_sh *sh);
-int			valid_arg_amount(t_cmd *cmd);
+void		exec_cd(char *path, t_sh *sh);
 char		*wd_cases(t_cmd *cmd, t_sh *sh);
 char		*expand_path(t_cmd *cmd, t_sh *sh);
 void		updateoldpwd_chdir(char *target_path, t_sh *sh);
+// int			valid_arg_amount(t_cmd *cmd);
 
 // error 1
 char		*errormsg_exitcode(char *why, int exit_code, char *str);

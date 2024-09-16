@@ -10,12 +10,12 @@ fork, dup, dup2, pipe,
 kill, wait, waitpid, wait3, wait4, 
 signal, sigaction, sigemptyset, sigaddset,
 
-getcwd, chdir, opendir, readdir, closedir, access, getenv
+getcwd, chdir, opendir, readdir, closedir, access, getenv, stat
 
 isatty, ttyname, ttyslot, ioctl,
 tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
-stat, lstat, fstat, unlink, 
+lstat, fstat, unlink, 
 
 
 echo cd pwd export unset env exit

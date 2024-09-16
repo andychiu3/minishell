@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   err_printf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:59:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/06/17 14:39:58 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 08:21:49 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_printf(const char *str, ...)
+int	err_printf(const char *str, ...)
 {
 	va_list		args;
 	int			len;
@@ -55,7 +55,7 @@ void	ft_print_count(char c, int *len)
 {
 	if (*len == -1)
 		return ;
-	if (write(1, &c, 1) == -1)
+	if (write(STDERR_FILENO, &c, 1) == -1)
 	{
 		*len = -1;
 		return ;
