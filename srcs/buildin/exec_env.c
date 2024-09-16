@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:32:18 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/16 13:39:22 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:10:47 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	exec_env(t_cmd *cmd, int in_fd, int out_fd, t_sh *sh)
 	}
 	while (sh->env[++i])
 		ft_putendl_fd(sh->env[i], STDOUT_FILENO);
+	g_last_exit_code = 0;
 }

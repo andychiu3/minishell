@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 10:03:54 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/16 13:32:25 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:49:10 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ void	prnt_eof_err(char *str)
 	err_printf("minishell: syntax error: unexpected end of file\n");
 }
 
+void	prnt_cd_err(char *why, char *str)
+{
+	if (ft_strcmp("cd: invalid", why) == 0)
+		err_printf("minishell: cd: %s: No such file or directory\n", str);
+	else if (ft_strcmp("cd: notdir", why) == 0)
+		err_printf("minishell: cd: %s: Not a directory\n", str);
+	else if (ft_strcmp("cd: cantx", why) == 0)
+		err_printf("minishell: cd: %s: Permission denied\n", str);
+	else if (ft_strcmp("cd: 2arg", why) == 0)
+		err_printf("minishell: cd: too many arguments\n");
+}
+
 void	prnt_env_err(char *cmd, char *arg)
 {
 	if (ft_strcmp("=", arg) == 0)
@@ -44,7 +56,6 @@ void	prnt_env_err(char *cmd, char *arg)
 
 char	*errormsg_exitcode(char *why, int exit_code, char *str)
 {
-	// printf("why: %s\n", why);
 	if (ft_strcmp(why, "syntax") == 0)
 		prnt_syntax_err(str);
 	else if (ft_strcmp(why, "nocmd") == 0)
@@ -55,6 +66,8 @@ char	*errormsg_exitcode(char *why, int exit_code, char *str)
 		err_printf("minishell: %s: `%s': not a valid identifier\n", why, str);
 	else if (ft_strcmp(why, "env") == 0)
 		prnt_env_err(why, str);
+	else if (ft_strncmp(why, "cd: ", 4) == 0)
+		prnt_cd_err(why, str);
 	g_last_exit_code = exit_code;
 	return (NULL);
 }

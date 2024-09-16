@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:33:15 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/11 16:37:21 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:10:20 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	exec_echo(t_cmd *cmd, int in_fd, int out_fd)
 	}
 	if (nextline)
 		ft_putchar_fd('\n', out_fd);
+	g_last_exit_code = 0;
 }

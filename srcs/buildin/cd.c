@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 11:29:18 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/16 15:12:33 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:48:00 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,37 @@ char	*wd_cases(t_cmd *cmd, t_sh *sh)
 // 	return (ft_strs_count(cmd->arg) == 0 || ft_strs_count(cmd->arg) == 1);
 // }
 
+// void	exec_cd(char *path, t_sh *sh)
+// {
+// 	struct stat	path_stat;
+
+// 	stat(path, &path_stat);
+// 	if (access(path, F_OK) == -1)
+// 		err_printf("minishell: cd: %s: No such file or directory\n", path);
+// 	else if (!S_ISDIR(path_stat.st_mode))
+// 		err_printf("minishell: cd: %s: Not a directory\n", path);
+// 	else if (access(path, X_OK) == -1)
+// 		err_printf("minishell: cd: %s: Permission denied\n", path);
+// 	else if (access(path, F_OK | X_OK) == 0)
+// 		updateoldpwd_chdir(path, sh);
+// }
+
 void	exec_cd(char *path, t_sh *sh)
 {
 	struct stat	path_stat;
 
 	stat(path, &path_stat);
 	if (access(path, F_OK) == -1)
-		err_printf("minishell: cd: %s: No such file or directory\n", path);
+		errormsg_exitcode("cd: invalid", 1, path);
 	else if (!S_ISDIR(path_stat.st_mode))
-		err_printf("minishell: cd: %s: Not a directory\n", path);
+		errormsg_exitcode("cd: notdir", 1, path);
 	else if (access(path, X_OK) == -1)
-		err_printf("minishell: cd: %s: Permission denied\n", path);
+		errormsg_exitcode("cd: cantx", 1, path);
 	else if (access(path, F_OK | X_OK) == 0)
+	{
 		updateoldpwd_chdir(path, sh);
+		g_last_exit_code = 0;
+	}
 }
 
 void	process_cd(t_cmd *cmd, t_sh *sh)
@@ -106,5 +124,5 @@ void	process_cd(t_cmd *cmd, t_sh *sh)
 			exec_cd(*cmd->arg, sh);
 	}
 	else
-		err_printf("minishell: cd: too many arguments\n");
+		errormsg_exitcode("cd: 2arg", 1, path);
 }

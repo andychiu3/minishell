@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 08:41:53 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/15 09:28:25 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:16:25 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	exec_unset(char *arg, t_sh *sh)
 				var_exist = 1;
 		if (var_exist)
 			rm_env_var(arg, sh);
+		g_last_exit_code = 0;
 	}
 	else
 		errormsg_exitcode("unset", 1, arg);

@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:12:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/15 09:26:33 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 16:16:51 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	exec_export(char *arg, t_sh *sh)
 		}
 		if (!sh->env[i])
 			add_str_to_strs(&(sh->env), arg);
+		g_last_exit_code = 0;
 	}
 	else if (is_valid_identifier(arg) == -1)
 		errormsg_exitcode("export", 1, arg);
