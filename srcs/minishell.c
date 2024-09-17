@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:53:02 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/15 09:38:50 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 21:28:48 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	scanning(t_sh *sh, char *line)
 	// prnt_token(token);
 	root = NULL;
 	root = parser(&token);
-	prnt_ast(root, 0);
+	// prnt_ast(root, 0);
 	exec_ast(root, STDIN_FILENO, STDOUT_FILENO, sh);
 	ft_out(token, root);
 }

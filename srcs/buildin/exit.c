@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:33:45 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/09/16 16:52:30 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 21:27:47 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void	exec_exit(t_cmd *cmd)
 			exit_nbr = ft_atoi(cmd->arg[0]);
 		else
 		{
-			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-			ft_putstr_fd(cmd->arg[0], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			err_printf("minishell: exit: %s: numeric argument required\n",
+				cmd->arg[0]);
 			exit_nbr = 1;
 			exit(exit_nbr % 256);
 		}
@@ -40,3 +39,4 @@ void	exec_exit(t_cmd *cmd)
 	}
 	exit(exit_nbr % 256);
 }
+

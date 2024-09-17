@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/09/16 14:41:00 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/09/16 20:34:28 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ typedef struct s_ast
 
 typedef struct s_sh
 {
-	t_list	*token;
 	char	**env;
-	int		ret;
+	int		exit;
 }	t_sh;
 
 void		scanning(t_sh *sh, char *line);
