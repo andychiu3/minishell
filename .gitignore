@@ -1,0 +1,9 @@
+README.md
+*.o
+*.a
+.vscode
+minishell
+.DS_Store
+minishell_tester
+minishell_test.cfg
+minishell_test.log
