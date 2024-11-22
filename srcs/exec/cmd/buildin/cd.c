@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 11:29:18 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/10/19 13:28:31 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/11/22 17:32:50 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 void	updateoldpwd_chdir(char *target_path, t_sh *sh)
 {
 	char	*path;
+	char	*tmp;
 
-	path = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+	tmp = getcwd(NULL, 0);
+	path = ft_strjoin("OLDPWD=", tmp);
+	free(tmp);
 	exec_export(path, sh);
 	free(path);
 	chdir(target_path);
-	path = ft_strjoin("PWD=", getcwd(NULL, 0));
+	tmp = getcwd(NULL, 0);
+	path = ft_strjoin("PWD=", tmp);
+	free(tmp);
 	exec_export(path, sh);
+	free(path);
 }
 
 // - OLDPWD
