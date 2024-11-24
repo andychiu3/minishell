@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 08:41:53 by fiftyblue         #+#    #+#             */
-/*   Updated: 2024/10/19 21:21:42 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/11/24 11:12:31 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	rm_env_var(char *arg, t_sh *sh)
 	sh->env = tmp;
 }
 
+/*
+bash 3.2 needs this but bash 5.2 acts differently:
+else if (is_valid_identifier(arg) == -1 || is_valid_identifier(arg) == 1)
+	builtin_err_cases("unset: invalid", 1, arg, sh);
+else if (is_valid_identifier(arg) == -2)
+	builtin_err_cases("unset: option", 2, arg, sh);
+*/
 void	exec_unset(char *arg, t_sh *sh)
 {
 	int	i;
@@ -69,10 +76,6 @@ void	exec_unset(char *arg, t_sh *sh)
 			rm_env_var(arg, sh);
 		*(sh->ret) = 0;
 	}
-	// else if (is_valid_identifier(arg) == -1 || is_valid_identifier(arg) == 1)
-	// 	builtin_err_cases("unset: invalid", 1, arg, sh);
-	// else if (is_valid_identifier(arg) == -2)
-	// 	builtin_err_cases("unset: option", 2, arg, sh);
 }
 
 void	process_unset(t_cmd *cmd, t_sh *sh)

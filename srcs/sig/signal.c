@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:35:44 by achiu             #+#    #+#             */
-/*   Updated: 2024/11/15 08:50:52 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/11/24 10:28:26 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	sig_int(int sig)
 
 void	sig_parse_heredoc(int sig)
 {
-	err_printf("\n");
+	ft_putstr_fd("\n", STDERR_FILENO);
 	g_sig_num = sig;
 }
 
 void	sig_non_interactive(int sig)
 {
 	if (sig == SIGINT)
-		err_printf("\n");
+		ft_putstr_fd("\n", STDERR_FILENO);
 	else if (sig == SIGQUIT)
-		err_printf("Quit: 3\n");
+		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
 }
 
 // TCSAFLUSH, TCSANOW and TCSADRAIN
@@ -43,9 +43,40 @@ void	disable_ctrl_echo(void)
 	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
+	term.c_lflag &= ~(ICANON | ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
+
+// void	sig_mode(int mode)
+// {
+// 	struct sigaction	act;
+
+// 	ft_memset(&act, 0, sizeof(act));
+// 	if (mode == INTERACTIVE)
+// 	{
+// 		act.sa_handler = sig_int;
+// 		sigaction(SIGINT, &act, NULL);
+// 		act.sa_handler = SIG_IGN;
+// 		sigaction(SIGQUIT, &act, NULL);
+// 	}
+// 	else if (mode == PARSE)
+// 	{
+// 		act.sa_handler = sig_parse_heredoc;
+// 		sigaction(SIGINT, &act, NULL);
+// 	}
+// 	else if (mode == NON_INTERACTIVE)
+// 	{
+// 		act.sa_handler = sig_non_interactive;
+// 		sigaction(SIGINT, &act, NULL);
+// 		sigaction(SIGQUIT, &act, NULL);
+// 	}
+// 	else if (mode == IN_CHILD)
+// 	{
+// 		act.sa_handler = SIG_DFL;
+// 		sigaction(SIGINT, &act, NULL);
+// 		sigaction(SIGQUIT, &act, NULL);
+// 	}
+// }
 
 void	sig_mode(int mode)
 {
