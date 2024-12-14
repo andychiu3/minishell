@@ -6,7 +6,7 @@
 #    By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 10:37:56 by achiu             #+#    #+#              #
-#    Updated: 2024/11/16 10:33:38 by fiftyblue        ###   ########.fr        #
+#    Updated: 2024/12/14 11:52:30 by fiftyblue        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRC_FILES	= \
 			$(addprefix srcs/var/, $(addsuffix .c, $(VAR_SRC))) \
 			$(addprefix srcs/utils/, $(addsuffix .c, $(UTILS_SRC))) \
 
-OBJ			= $(patsubst src/%, objs/%, $(SRC_FILES:.c=.o))
+OBJ			= $(patsubst %.c, objs/%.o, $(notdir $(SRC_FILES)))
+VPATH		= srcs srcs/lexer srcs/parser srcs/exec/operator srcs/exec/cmd/buildin srcs/exec/cmd \
+			srcs/debug srcs/setup srcs/sig srcs/var srcs/utils
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Ilibft -Iincludes
@@ -49,12 +51,17 @@ LDFLAGS		= -L$(RL_PATH)/lib -lreadline
 
 # readline PATH may differ cuz install in different way in different system
 ARCH		= $(shell uname -m)
-ifeq ($(ARCH),arm64)
-RL_PATH		= /opt/homebrew/opt/readline
-else ifeq ($(ARCH),x86_64)
-RL_PATH		= /usr/local/opt/readline
+OS			= $(shell uname -s)
+ifeq ($(OS),Darwin)
+	ifeq ($(ARCH),arm64)
+	RL_PATH		= /opt/homebrew/opt/readline
+	else ifeq ($(ARCH),x86_64)
+	RL_PATH		= /usr/local/opt/readline
+	endif
+else ifeq ($(OS),Linux)
+	LDFLAGS = -lreadline
+	CFLAGS += -fcommon
 endif
-# RL_PATH			= /Users/achiu/local/
 
 LIBFT		= libft/libft.a
 LIBFT_MAKE	= make -C libft/
@@ -63,12 +70,16 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ) $(LIBFT)
 			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) $(LDFLAGS)
+
+objs/%.o:	%.c
+			@mkdir -p objs/
+			$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 			
 $(LIBFT):
 			$(LIBFT_MAKE)
 
 clean:
-			rm -rf $(OBJ)
+			rm -rf objs/
 			$(LIBFT_MAKE) clean
 
 fclean: 	clean

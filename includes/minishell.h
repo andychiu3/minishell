@@ -6,7 +6,7 @@
 /*   By: fiftyblue <fiftyblue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:44:07 by achiu             #+#    #+#             */
-/*   Updated: 2024/11/24 11:11:06 by fiftyblue        ###   ########.fr       */
+/*   Updated: 2024/12/14 11:45:55 by fiftyblue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@
 # include <curses.h>
 # include <term.h>
 # include <termios.h>
-# include <malloc/malloc.h>
 # include <sys/stat.h>
+
+# ifdef __APPLE__
+#  include <malloc/malloc.h>
+# elif defined(__linux__)
+#  include <sys/wait.h>
+# endif
 
 /*
 # define PROMPT "\x1b[1;30mminishell $ \x1b[0m"
